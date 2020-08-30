@@ -82,8 +82,15 @@ void output_file() {
     new_file << "int main() {\n"
                 "\tios_base::sync_with_stdio(false);\n"
                 "\tcin.tie(NULL);\n"
-                "\tsrand(chrono::steady_clock::now().time_since_epoch().count());\n\n"
-                "\tint num_tests = 1;\n"
+                "\tsrand(chrono::steady_clock::now().time_since_epoch().count());\n\n";
+
+    // USACO files
+    if (USACO_PRESENT) {
+        new_file << "\tFILE *IN = freopen(\"" << get_task() << ".in\", \"r\", stdin);\n"
+                    "\tFILE *OUT = freopen(\"" << get_task() << ".out\", \"w\", stdout);\n\n";
+    }
+
+    new_file << "\tint num_tests = 1;\n"
                 "\t/* cin >> num_tests; */\n"
                 "\tfor(int i = 0; i < num_tests; i++) {\n";
 
@@ -99,6 +106,7 @@ void output_file() {
     return;
  
 }
+
 int main(int argc, char** argv) {
     ios_base::sync_with_stdio(false);  
     cin.tie(NULL);
