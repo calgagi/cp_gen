@@ -1,5 +1,5 @@
 COMPILE = g++ --std=c++17 -O2
-EXE = cp_gen
+EXE = gen 
 LINKERFLAG = -lm
 
 SRCS := $(wildcard *.cpp)

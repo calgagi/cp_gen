@@ -73,34 +73,34 @@ void output_file() {
     
     // solve() function
     new_file << "void solve() {\n"
-                "\t\n"
-                "\t\n"
-                "\treturn;\n"
+                "    \n"
+                "    \n"
+                "    return;\n"
                 "}\n\n";
 
     // main() function
     new_file << "int main() {\n"
-                "\tios_base::sync_with_stdio(false);\n"
-                "\tcin.tie(NULL);\n"
-                "\tsrand(chrono::steady_clock::now().time_since_epoch().count());\n\n";
+                "    ios_base::sync_with_stdio(false);\n"
+                "    cin.tie(NULL);\n"
+                "    srand(chrono::steady_clock::now().time_since_epoch().count());\n\n";
 
     // USACO files
     if (USACO_PRESENT) {
-        new_file << "\tFILE *IN = freopen(\"" << get_task() << ".in\", \"r\", stdin);\n"
-                    "\tFILE *OUT = freopen(\"" << get_task() << ".out\", \"w\", stdout);\n\n";
+        new_file << "    FILE *IN = freopen(\"" << get_task() << ".in\", \"r\", stdin);\n"
+                    "    FILE *OUT = freopen(\"" << get_task() << ".out\", \"w\", stdout);\n\n";
     }
 
-    new_file << "\tint num_tests = 1;\n"
-                "\t/* cin >> num_tests; */\n"
-                "\tfor(int i = 0; i < num_tests; i++) {\n";
+    new_file << "    int num_tests = 1;\n"
+                "    /* cin >> num_tests; */\n"
+                "    for (int i = 0; i < num_tests; i++) {\n";
 
     if (CASE_NUMBERS) {
-        new_file << "\t\tcout << \"Case #\" << i+1 << \": \";\n";
+        new_file << "        cout << \"Case #\" << i+1 << \": \";\n";
     }
 
-    new_file << "\t\tsolve();\n"
-                "\t}\n\n"
-                "\treturn 0;\n"
+    new_file << "        solve();\n"
+                "    }\n\n"
+                "    return 0;\n"
                 "}\n";
              
     return;
