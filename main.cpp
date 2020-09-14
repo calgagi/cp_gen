@@ -67,14 +67,10 @@ void output_file() {
     new_file << "/*\n * author: calgagi\n * file: " << filename << "\n * time: " << ctime(&now) << " */\n\n";
 
     new_file << "#include<bits/stdc++.h>\n\n"
-                "using namespace std;\n"
-                "#define ld long double\n"
-                "#define ll long long\n\n";
+                "using namespace std;\n\n";
     
     // solve() function
     new_file << "void solve() {\n"
-                "    \n"
-                "    \n"
                 "    return;\n"
                 "}\n\n";
 
