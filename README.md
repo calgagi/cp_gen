@@ -11,4 +11,4 @@ Just type `make` to compile the program.
 
 ### Example
 
-`gen -u A.cpp`
+`gen A.cpp`
