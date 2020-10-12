@@ -7,6 +7,7 @@ public:
     dsu(int N) {
         num_components = N;
         size.assign(N, 1);
+        link.assign(N, 0);
         for (int i = 0; i < N; i++) {
             link[i] = i;
         }

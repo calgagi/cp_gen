@@ -4,6 +4,7 @@
 #   * The class in <ds_name>Tester.hpp must be named <ds_name>Tester
 #   * The class must have an entry point called runTests(), which will
 #     called by the file that is generated.
+#   * All test functions must return true or false
 
 COMPILE = g++ --std=c++17 -O2
 MAIN_FILE = tests.cpp
@@ -18,6 +19,7 @@ END_BRACE := }
 ${EXE}: ${MAIN_FILE}
 	${COMPILE} ${MAIN_FILE} -o ${EXE} 
 	./${EXE}
+	rm -rf ${EXE} ${MAIN_FILE}
 
 ${MAIN_FILE}: ${HEADER_FILE} ${TEST_FILE}
 	$(shell \
@@ -31,6 +33,8 @@ ${MAIN_FILE}: ${HEADER_FILE} ${TEST_FILE}
 ${HEADER_FILE}:
     $(shell \
 	printf "#include <bits/stdc++.h>\nusing namespace std;\n" > ${HEADER_FILE}; \
+	printf "#define FAIL \"\\\033[1;31mfailed\\\033[0m\"\n" >> ${HEADER_FILE}; \
+	printf "#define PASS \"\\\033[1;32mpassed\\\033[0m\"\n" >> ${HEADER_FILE}; \
 	for i in `find ../lib/ -type f -iwholename "*lib/*.hpp"`; do \
 		printf "#include \"$${i:7:-4}Tester.hpp\"\n" >> ${HEADER_FILE}; \
 	done \
@@ -39,7 +43,7 @@ ${HEADER_FILE}:
 ${TEST_FILE}:
 	$(shell \
 	for i in `find ../lib/ -type f -iwholename "*lib/*.hpp"`; do \
-		printf "\t$${i:7:-4}Tester $${i:7:-4}Test;\n\t$${i:7:-4}Test.runTests();\n" >> ${TEST_FILE}; \
+		printf "\t$${i:7:-4}Tester::runTests();\n" >> ${TEST_FILE}; \
 	done \
 	)
 

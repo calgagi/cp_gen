@@ -83,7 +83,7 @@ private:
             cur->left = leftRotate(cur->left);
             cur = rightRotate(cur);
         }
-        else if (getHieght(cur->left) - getHeight(cur->right) <= -2 && val < cur->right->val) {
+        else if (getHeight(cur->left) - getHeight(cur->right) <= -2 && val < cur->right->val) {
             cur->right = rightRotate(cur->right);
             cur = leftRotate(cur);
         }
@@ -136,7 +136,7 @@ private:
             cur->left = leftRotate(cur->left);
             cur = rightRotate(cur);
         }
-        else if (getHieght(cur->left) - getHeight(cur->right) <= -2 && val < cur->right->val) {
+        else if (getHeight(cur->left) - getHeight(cur->right) <= -2 && val < cur->right->val) {
             cur->right = rightRotate(cur->right);
             cur = leftRotate(cur);
         }
@@ -161,6 +161,23 @@ private:
     }
              
 public:
+    ~pbavl() {
+        stack<Node*> s;
+        s.push(root);
+        while (!s.empty()) {
+            Node* cur = s.top();
+            s.pop();
+            if (!cur) continue;
+            s.push(cur->left), s.push(cur->right);
+            delete cur;
+        }
+        return;
+    }
+
+    int height() {
+        return getHeight(root);
+    }
+
     int size() {
         return num_refs;
     }
