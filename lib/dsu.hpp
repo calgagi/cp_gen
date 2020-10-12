@@ -4,10 +4,10 @@ public:
     vector<int> size;
     int num_components;
 
-    dsu(int sz) {
-        num_components = sz;
-        size.assign(n, 1);
-        for (int i = 0; i < sz; i++) {
+    dsu(int N) {
+        num_components = N;
+        size.assign(N, 1);
+        for (int i = 0; i < N; i++) {
             link[i] = i;
         }
         return;
