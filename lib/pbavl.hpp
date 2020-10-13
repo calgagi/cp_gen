@@ -7,13 +7,13 @@ private:
         int height = 1;
         int treeSize = 1;
         int ref = 1;
+        int treeRef = 1;
         Node(T v) : val(v) {};
         Node() {};
     };
 
     // Note: this is an AVL tree
     Node* root = nullptr;
-    int num_refs = 0; 
 
     int getHeight(Node* cur) {
         if (!cur) {
@@ -25,6 +25,13 @@ private:
         );
     }
 
+    int getTreeRef(Node* cur) {
+        if (!cur) {
+            return 0;
+        }
+        return cur->ref + (cur->left ? cur->left->treeRef : 0) + (cur->right ? cur->right->treeRef : 0);
+    }
+
     int getTreeSize(Node* cur) {
         if (!cur) {
             return 0;
@@ -32,16 +39,23 @@ private:
         return 1 + (cur->left ? cur->left->treeSize : 0) + (cur->right ? cur->right->treeSize : 0);
     }
 
+    int getBalance(Node* cur) {
+        return (!cur ? 0 : getHeight(cur->left) - getHeight(cur->right));
+    }
+
     Node* rightRotate(Node* cur) {
         assert(cur != nullptr);
         assert(cur->left != nullptr);
         Node* newRoot = cur->left;
-        cur->left = newRoot->right;
+        Node* temp = newRoot->right;
         newRoot->right = cur;
+        cur->left = temp;
         cur->height = getHeight(cur);
         cur->treeSize = getTreeSize(cur);
+        cur->treeRef = getTreeRef(cur);
         newRoot->height = getHeight(newRoot);
         newRoot->treeSize = getTreeSize(newRoot);
+        newRoot->treeRef = getTreeRef(newRoot);
         return newRoot;
     }
 
@@ -49,12 +63,15 @@ private:
         assert(cur != nullptr);
         assert(cur->right != nullptr);
         Node* newRoot = cur->right;
-        cur->right = newRoot->left;
+        Node* temp = newRoot->left;
         newRoot->left = cur;
+        cur->right = temp;
         cur->height = getHeight(cur);
         cur->treeSize = getTreeSize(cur);
+        cur->treeRef = getTreeRef(cur);
         newRoot->height = getHeight(newRoot);
         newRoot->treeSize = getTreeSize(newRoot);
+        newRoot->treeRef = getTreeRef(newRoot);
         return newRoot;
     }
 
@@ -73,17 +90,18 @@ private:
         }
         cur->height = getHeight(cur);
         cur->treeSize = getTreeSize(cur);
-        if (getHeight(cur->left) - getHeight(cur->right) >= 2 && val < cur->left->val) {
+        cur->treeRef = getTreeRef(cur);
+        if (getBalance(cur) >= 2 && val < cur->left->val) {
             cur = rightRotate(cur);
         } 
-        else if (getHeight(cur->left) - getHeight(cur->right) <= -2 && val > cur->right->val) {
+        else if (getBalance(cur) <= -2 && val > cur->right->val) {
             cur = leftRotate(cur);
         }
-        else if (getHeight(cur->left) - getHeight(cur->right) >= 2 && val > cur->left->val) {
+        else if (getBalance(cur) >= 2 && val > cur->left->val) {
             cur->left = leftRotate(cur->left);
             cur = rightRotate(cur);
         }
-        else if (getHeight(cur->left) - getHeight(cur->right) <= -2 && val < cur->right->val) {
+        else if (getBalance(cur) <= -2 && val < cur->right->val) {
             cur->right = rightRotate(cur->right);
             cur = leftRotate(cur);
         }
@@ -95,7 +113,7 @@ private:
             return nullptr;
         }
         if (val == cur->val) {
-            num_refs--;
+            cur->ref--;
             if (cur->ref == 0) {
                 if (!cur->left && !cur->right) {
                     delete cur;
@@ -126,17 +144,18 @@ private:
         }
         cur->treeSize = getTreeSize(cur);
         cur->height = getHeight(cur);
-        if (getHeight(cur->left) - getHeight(cur->right) >= 2 && val < cur->left->val) {
+        cur->treeRef = getTreeRef(cur);
+        if (getBalance(cur) >= 2 && getBalance(cur->left) >= 0) {
             cur = rightRotate(cur);
         } 
-        else if (getHeight(cur->left) - getHeight(cur->right) <= -2 && val > cur->right->val) {
+        else if (getBalance(cur) <= -2 && getBalance(cur->right) <= 0) {
             cur = leftRotate(cur);
         }
-        else if (getHeight(cur->left) - getHeight(cur->right) >= 2 && val > cur->left->val) {
+        else if (getBalance(cur) >= 2 && getBalance(cur->left) < 0) {
             cur->left = leftRotate(cur->left);
             cur = rightRotate(cur);
         }
-        else if (getHeight(cur->left) - getHeight(cur->right) <= -2 && val < cur->right->val) {
+        else if (getBalance(cur) <= -2 && getBalance(cur->right) > 0) {
             cur->right = rightRotate(cur->right);
             cur = leftRotate(cur);
         }
@@ -157,7 +176,24 @@ private:
             return countHelper(cur->right, val);
         }
         assert(false); // should never make it this far
-        return false;
+        return 0;
+    }
+
+    int beforeHelper(Node* cur, T val) {
+        if (!cur) {
+            return 0;
+        }
+        if (val == cur->val) {
+            return (cur->left ? cur->left->treeRef : 0);
+        }
+        else if (cur->val < val) {
+            return cur->ref + (cur->left ? cur->left->treeRef : 0) + beforeHelper(cur->right, val);
+        }
+        else {
+            return beforeHelper(cur->left, val);
+        }
+        assert(false); // should never make it this far
+        return 0;
     }
              
 public:
@@ -174,16 +210,19 @@ public:
         return;
     }
 
+    int before(T val) {
+        return beforeHelper(root, val);
+    }
+
     int height() {
         return getHeight(root);
     }
 
     int size() {
-        return num_refs;
+        return getTreeRef(root);
     }
 
     void insert(T val) {
-        num_refs++;
         root = insertHelper(root, val);
         return;
     }     

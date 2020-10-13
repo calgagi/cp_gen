@@ -1,10 +1,5 @@
 # This Makefile automatically generates and runs a C++ file that runs 
 # all tests. 
-#   * Tests must be in tests/<ds_name>Tester.hpp for <ds_name>
-#   * The class in <ds_name>Tester.hpp must be named <ds_name>Tester
-#   * The class must have an entry point called runTests(), which will
-#     called by the file that is generated.
-#   * All test functions must return true or false
 
 COMPILE = g++ --std=c++17 -O2
 MAIN_FILE = tests.cpp
