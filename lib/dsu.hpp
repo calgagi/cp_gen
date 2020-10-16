@@ -30,9 +30,11 @@ public:
         if (size[a] > size[b]) {
             swap(a, b);
         }
+
         link[a] = b;
         size[b] += size[a];
         num_components--;
+
         return;
     }
 };

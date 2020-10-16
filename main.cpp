@@ -24,6 +24,13 @@ string noAfterDot(const string& filename) {
     return filename.substr(0, where);
 }
 
+void shavePath(string& path) {
+    while (!path.empty() && path.back() != '/') {
+        path.pop_back();
+    }
+    return;
+}
+
 // Output functions
 void output_header(fstream& new_file, const bool& USACO, const string& usacoUsername, const string& filename) {
     // USACO header
@@ -44,22 +51,34 @@ void output_header(fstream& new_file, const bool& USACO, const string& usacoUser
 
 void output_templates(fstream& new_file, const vector<string>& templates, const string& path) {
     char buff[512];
+    // Linux syscall that gets the linked path to the current executable, "gen"
     ssize_t r = ::readlink("/proc/self/exe", buff, 511);
     if (r == -1) {
-        cout << "ERROR" << endl;
+        error("Could not find path to current executable. If you are not on Linux, this is because the readlink syscall does not exist");
     }
     else {
         buff[r] = '\0';
     }
-    cout << buff << endl;
-    fstream out_file;
-    out_file.open("lib/pbavl.hpp", ios_base::out);
-    if (!out_file.is_open()) {
-        cout << "Could not open file for output" << endl;
+
+    // this assumes that gen is in the root directory of cp_gen (where lib is)
+    string gen_path = buff;
+    shavePath(gen_path); 
+    gen_path += "lib/";
+
+    for (const string& ds : templates) {
+        fstream in_file;
+        in_file.open(gen_path + ds + ".hpp");
+        if (!in_file.is_open()) {
+            error("Could not find file " + ds + ".hpp in " + gen_path);
+        }
+        string line;
+        while (getline(in_file, line)) {
+            new_file << line << endl;
+        }
+        new_file << endl;
     }
-    else {
-        cout << "Could find file!" << endl;
-    }
+
+    return;
 }
 
 void output_main(fstream& new_file, const bool& USACO, const string& usacoUsername, const bool& PRINT_TC, const string& filename) {
@@ -134,6 +153,10 @@ int main(int argc, char** argv) {
         else if (cliArgs.back()[0] != '-') {
             filename = cliArgs.back();
             cliArgs.pop_back();
+        }
+        else {
+            // remove leading '-'
+            cliArgs.back().erase(cliArgs.back().begin());
         }
     }
 

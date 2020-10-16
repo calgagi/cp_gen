@@ -50,24 +50,30 @@ private:
     Node* rightRotate(Node* cur) {
         assert(cur != nullptr);
         assert(cur->left != nullptr);
+
         Node* newRoot = cur->left;
         Node* temp = newRoot->right;
         newRoot->right = cur;
         cur->left = temp;
+
         refresh(cur);
         refresh(newRoot);
+
         return newRoot;
     }
 
     Node* leftRotate(Node* cur) {
         assert(cur != nullptr);
         assert(cur->right != nullptr);
+
         Node* newRoot = cur->right;
         Node* temp = newRoot->left;
         newRoot->left = cur;
         cur->right = temp;
+
         refresh(cur);
         refresh(newRoot);
+
         return newRoot;
     }
 
@@ -84,7 +90,9 @@ private:
         else {
             cur->right = insertHelper(cur->right, val);
         }
+
         refresh(cur);
+
         if (getBalance(cur) >= 2 && val < cur->left->val) {
             cur = rightRotate(cur);
         } 
@@ -99,6 +107,7 @@ private:
             cur->right = rightRotate(cur->right);
             cur = leftRotate(cur);
         }
+
         return cur;
     }
 
@@ -136,7 +145,9 @@ private:
         else {
             cur->right = removeHelper(cur->right, val);
         }
+
         refresh(cur);
+
         if (getBalance(cur) >= 2 && getBalance(cur->left) >= 0) {
             cur = rightRotate(cur);
         } 
@@ -151,6 +162,7 @@ private:
             cur->right = rightRotate(cur->right);
             cur = leftRotate(cur);
         }
+
         return cur;
     }
 

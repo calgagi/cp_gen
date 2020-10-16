@@ -5,7 +5,7 @@ A modular and robust application to create competitive programming templates.
 ## Install
 * Note: must be using Linux since this program uses a syscall (`readlink`) that is only available on Linux.
 * Run `make` to compile the program. It should produce a binary called `.\gen`. 
-* Add `gen` to your path.
+* Add `cp_gen` to your path. Please make sure that `gen` is in the root directory of this repo since reading/writing library files to templates requires that.
 
 ## Testing
 * To run tests, run `make tests`.
