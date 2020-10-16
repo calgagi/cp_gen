@@ -15,7 +15,7 @@ A modular and robust application to create competitive programming templates.
 * `filename.cpp` (<b>REQUIRED</b>): Creates file in current working directory called `filename.cpp` with template contents outputted to it.
 
 * `-c`: Adds printing each test case number.
-* `-u`: Adds USACO things.
+* `-u`: Adds USACO things. Expects `username` directly afterwards. For example, `-u calgagi`.
 * `-<ds>`: Adds contents from `lib/<ds>.hpp` to top of file.
 
 ## Examples
