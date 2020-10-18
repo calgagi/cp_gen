@@ -152,7 +152,7 @@ private:
         clock_t start = clock();
         pbavl<int> item;
         map<int,int> inserted;
-        for (int i = 0; i < 500000; i++) {
+        for (int i = 0; i < 100000; i++) {
             int j = rand(); 
             inserted[j]++;
             item.insert(j);
@@ -180,7 +180,7 @@ private:
     }
 
 public:
-    static void runTests() {
+    static bool runTests() {
         map<string, function<bool()>> tests = {
             {"instantiate", instantiate},
             {"count", count},
@@ -195,9 +195,14 @@ public:
             {"before", before}
         };
         cout << "====== pbval ======" << endl;
+        bool ans = true;
         for (const auto& test : tests) {
-            cout << test.first << ": " << (tests[test.first]() ? PASS : FAIL) << endl;
+            bool result = tests[test.first]();
+            cout << test.first << ": " << (result ? PASS : FAIL) << endl;
+            if (!result) {
+                ans = false;
+            }
         }
-        return;
+        return ans;
     }
 };

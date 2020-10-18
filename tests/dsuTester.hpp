@@ -8,14 +8,19 @@ private:
     }
 
 public:
-    static void runTests() {
+    static bool runTests() {
         map<string, function<bool()>> tests = {
             {"instantiate", instantiate}
         };
         cout << "====== dsu ======" << endl;
+        bool ans = true;
         for (const auto& test : tests) {
-            cout << test.first << ": " << (tests[test.first]() ? PASS : FAIL) << endl;
+            bool result = tests[test.first]();
+            cout << test.first << ": " << (result ? PASS : FAIL) << endl;
+            if (!result) {
+                ans = false;
+            }
         }
-        return;
+        return ans;
     }
 };

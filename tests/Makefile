@@ -20,7 +20,9 @@ ${MAIN_FILE}: ${HEADER_FILE} ${TEST_FILE}
 	$(shell \
 	cat ${HEADER_FILE} > ${MAIN_FILE}; \
 	printf "int main() ${START_BRACE}\n" >> ${MAIN_FILE}; \
+	printf "\tbool ans = true;\n" >> ${MAIN_FILE}; \
 	cat ${TEST_FILE} >> ${MAIN_FILE}; \
+	printf "\tif (!ans) exit(-10);" >> ${MAIN_FILE}; \
 	printf "\treturn 0;\n${END_BRACE}" >> ${MAIN_FILE}; \
 	rm -f ${HEADER_FILE} ${TEST_FILE}; \
 	)
@@ -38,7 +40,7 @@ ${HEADER_FILE}:
 ${TEST_FILE}:
 	$(shell \
 	for i in `find ../lib/ -type f -iwholename "*lib/*.hpp"`; do \
-		printf "\t$${i:7:-4}Tester::runTests();\n" >> ${TEST_FILE}; \
+		printf "\tans = $${i:7:-4}Tester::runTests() && ans;\n" >> ${TEST_FILE}; \
 	done \
 	)
 
