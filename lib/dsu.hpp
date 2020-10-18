@@ -1,9 +1,10 @@
 class dsu {
-public:
+private:
     vector<int> link;
     vector<int> size;
     int num_components;
 
+public:
     dsu(int N) {
         num_components = N;
         size.assign(N, 1);
@@ -36,5 +37,9 @@ public:
         num_components--;
 
         return;
+    }
+
+    int components() {
+        return num_components;
     }
 };
