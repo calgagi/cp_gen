@@ -1,0 +1,3 @@
+cp_gen.code-workspace
+gen
+tests/*.cpp
