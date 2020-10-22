@@ -57,6 +57,7 @@ private:
 
 public:
     static bool runTests() {
+        cout << "============ dsu ============" << endl;
         map<string, function<bool()>> tests = {
             {"instantiate", instantiate},
             {"nounite", nounite},
@@ -64,7 +65,6 @@ public:
             {"uniterand", uniterand},
             {"stress", stress}
         };
-        cout << "====== dsu ======" << endl;
         bool ans = true;
         for (const auto& test : tests) {
             bool result = tests[test.first]();

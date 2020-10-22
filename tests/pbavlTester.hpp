@@ -181,6 +181,7 @@ private:
 
 public:
     static bool runTests() {
+        cout << "============ pbval ============" << endl;
         map<string, function<bool()>> tests = {
             {"instantiate", instantiate},
             {"count", count},
@@ -194,7 +195,6 @@ public:
             {"stress2", stress2},
             {"before", before}
         };
-        cout << "====== pbval ======" << endl;
         bool ans = true;
         for (const auto& test : tests) {
             bool result = tests[test.first]();
