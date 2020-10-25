@@ -1,17 +1,17 @@
-#include "../lib/pbavl.hpp"
+#include "../lib/avl.hpp"
 
-class pbavlTester {
+class avlTester {
 private:
     static bool instantiate() {
-        pbavl<int> item;
-        pbavl<float> item2;
-        pbavl<int64_t> item3;
-        pbavl<string> item4;
+        avl<int> item;
+        avl<float> item2;
+        avl<int64_t> item3;
+        avl<string> item4;
         return true;
     }
 
     static bool count() {
-        pbavl<int> item;
+        avl<int> item;
         srand(time(NULL));
         for (int i = 0; i < 100; i++) {
             item.insert(i);
@@ -35,7 +35,7 @@ private:
     }
 
     static bool count2() {
-        pbavl<int> item;
+        avl<int> item;
         srand(time(NULL));
         map<int,int> vals;
         for (int i = 0; i < 100000; i++) {
@@ -50,7 +50,7 @@ private:
     }
 
     static bool balance() {
-        pbavl<int> item;
+        avl<int> item;
         if (item.height() != 0) {
             return false;
         }
@@ -65,7 +65,7 @@ private:
     }
 
     static bool balance2() {
-        pbavl<int> item;
+        avl<int> item;
         for (int i = 0; i < 100; i++) {
             item.insert(i);
         }
@@ -79,7 +79,7 @@ private:
     }
 
     static bool remove() {
-        pbavl<int> item;
+        avl<int> item;
         for (int i = 0; i < 2000; i++) {
             item.insert(i);
         }
@@ -106,7 +106,7 @@ private:
     }
 
     static bool remove2() {
-        pbavl<int> item;
+        avl<int> item;
         for (int i = 0; i < 100000; i++) {
             item.insert(i);
         }
@@ -120,7 +120,7 @@ private:
     }
 
     static bool singleval() {
-        pbavl<int> item;
+        avl<int> item;
         for (int i = 0; i < 10000; i++) {
             item.insert(0);
         }
@@ -138,7 +138,7 @@ private:
 
     static bool stress() {
         clock_t start = clock();
-        pbavl<int> item;
+        avl<int> item;
         for (int i = 0; i < 500000; i++) {
             item.insert(i);
         }
@@ -150,7 +150,7 @@ private:
 
     static bool stress2() {
         clock_t start = clock();
-        pbavl<int> item;
+        avl<int> item;
         map<int,int> inserted;
         for (int i = 0; i < 100000; i++) {
             int j = rand(); 
@@ -167,7 +167,7 @@ private:
     }
 
     static bool before() {
-        pbavl<int> item;
+        avl<int> item;
         for (int i = 0; i < 10000; i++) {
             item.insert(i);
         }
@@ -181,7 +181,7 @@ private:
 
 public:
     static bool runTests() {
-        cout << "============ pbval ============" << endl;
+        cout << "============ avl ============" << endl;
         map<string, function<bool()>> tests = {
             {"instantiate", instantiate},
             {"count", count},

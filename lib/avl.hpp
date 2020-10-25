@@ -1,5 +1,5 @@
 template <class T> 
-class pbavl {
+class avl {
 private:
     struct Node {
         T val;
