@@ -17,14 +17,14 @@ A modular and robust application to create competitive programming templates.
 * `avl<type>()`: creates an empty avl tree that holds data of type `type`; `type` must have `operator<` defined
 * `int before(type val)`: finds the amount of items in the set that are of lesser than or equal value to `val` in O(log(size))
 * `int size()`: returns the amount of items in the set 
-* `void insert(type val)`: inserts `val` into the set in O(log(size))
-* `void remove(type val)`: removes a single instance of `val` in the set in O(log(size))
-* `int count(type val)`: returns the number of instances of `val` in the set in O(log(size))
+* `void insert(type val)`: inserts `val` into the set in O(log(size)) time
+* `void remove(type val)`: removes a single instance of `val` in the set in O(log(size)) time
+* `int count(type val)`: returns the number of instances of `val` in the set in O(log(size)) time
 
 #### segtree: Policy-based Segment Tree
 * `segtree<type>(int size, type identity, function<type(type, type)>) combine)`: creates a tree of size `4*size` of which all elements are equal to `identity`; `combine` is the function used to combine two tree nodes (your `combine(identity, x) = x` for all `x`)
-* `void update(int pos, type val)`: updates the value at `pos` to `val` in O(log(size))
-* `type query(int left, int right)`: returns the range query defined by `combine` in the range [`left`, `right`] in O(log(size))
+* `void update(int pos, type val)`: updates the value at `pos` to `val` in O(log(size)) time
+* `type query(int left, int right)`: returns the range query defined by `combine` in the range [`left`, `right`] in O(log(size)) time
 
 ## Testing
 * To run tests, run `make tests`.
