@@ -88,6 +88,7 @@ mint power(const mint& base, ll exp) {
     return ans;
 }
 
+// in and in.MOD must be coprime!
 mint inv(const mint& in) {
     return power(in, in.MOD-2);
 }
