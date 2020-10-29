@@ -13,14 +13,14 @@ const NullStream &operator<<(NullStream &&os, const T &value) {
 
 class mintTester {
 private:
-static bool instantiate() {
+    static bool instantiate() {
         mint a = 1000;
         int x = 10;
         a = x;
         mint b = x;
         long c = x;
         mint d;
-        ll e = a;
+        long long e = a;
         return true;
     }
 
@@ -99,7 +99,7 @@ static bool instantiate() {
             if (A[i-1] > A[i]) {
                 return false;
             }
-            ll a = A[i];
+            long long a = A[i];
             if (a < A[i-1]) {
                 return false;
             }
@@ -115,7 +115,7 @@ static bool instantiate() {
             if (A[i-1] < A[i]) {
                 return false;
             }
-            ll a = A[i];
+            long long a = A[i];
             if (a > A[i-1]) {
                 return false;
             }
@@ -130,6 +130,47 @@ static bool instantiate() {
         mint test = 10;
         auto null = NullStream();
         null << test << endl;
+        istringstream is("-1 0 1 2 3 4 5 6 7 8 9 10");
+        for (int i = -1; i <= 10; i++) {
+            mint x;
+            is >> x;
+            null << x << " " << to_string(x) << " ";
+            if (x != i) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static bool multiply() {
+        mint a = 10;
+        a *= -10;
+        if (a != 999999907) {
+            return false;
+        }
+        a = (long long) 1000000 * 1000000;
+        if (a != 999993007) {
+            return false;
+        }
+        mint b = 0;
+        a = a * b;
+        if (a != 0) {
+            return false;
+        }
+        return true;
+    }
+
+    static bool inverse() {
+        for (mint i = 0; i < 100000; i++) {
+            if (inv(i) != (mint) 1 / i) {
+                return false;
+            }
+        }
+        mint a = 1;
+        a /= 1124123;
+        if (a != inv(1124123)) {
+            return false;
+        }
         return true;
     }
 
@@ -142,7 +183,9 @@ public:
             {"add2", add2},
             {"subtract", subtract},
             {"stdsort", stdsort},
-            {"stream", stream}
+            {"stream", stream},
+            {"multiply", multiply},
+            {"inverse", inverse}
         };
         bool ans = true;
         for (const auto& test : tests) {

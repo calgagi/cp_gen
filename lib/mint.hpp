@@ -1,6 +1,6 @@
 class mint {
 private:
-    ll val = 0;
+    long long val = 0;
 
     void normalize() {
         val %= MOD;
@@ -10,24 +10,28 @@ private:
     }
 
 public:
-    ll MOD = 1e9 + 7;
+    friend mint power(const mint& base, long long exp);
+    friend mint inv(const mint&);
+    friend istream& operator>>(istream& stream, mint& number);
+
+    long long MOD = 1e9 + 7;
 
     mint() {}
 
-    mint(const ll& other) : val(other) {
+    mint(const long long& other) : val(other) {
         this->normalize(); 
         return;
     }
 
-    mint& operator=(const ll& other) {
+    mint& operator=(const long long& other) {
         this->val = other;
-        normalize();
+        this->normalize();
         return *this;
     }
 
     mint& operator=(const mint& other) {
         this->val = other.val;
-        normalize();
+        this->normalize();
         return *this;
     }
 
@@ -37,7 +41,7 @@ public:
         return ans;
     }
 
-    operator ll() const {
+    operator long long() const {
         return this->val;
     }
 
@@ -60,23 +64,29 @@ public:
     }
 
     mint& operator/=(const mint& other) {
-        this->val /= other.val;
+        this->val = this->val * inv(other);
         this->normalize();
         return *this;
     }
 
-    mint& operator++() {
+    mint& operator++(int) {
         (*this) += 1;
         return *this;
     }
 
-    mint& operator--() {
+    mint& operator--(int) {
         (*this) -= 1;
         return *this;
     }
+
+    mint operator/(const mint& other) {
+        mint ans;
+        ans.val = this->val * inv(other);
+        return ans;
+    }
 };
 
-mint power(const mint& base, ll exp) {
+mint power(const mint& base, long long exp) {
     mint ans = 1, x = base;
     while (exp) {
         if (exp & 1) {
@@ -91,4 +101,11 @@ mint power(const mint& base, ll exp) {
 // in and in.MOD must be coprime!
 mint inv(const mint& in) {
     return power(in, in.MOD-2);
+}
+
+istream& operator>>(istream& stream, mint& number) {
+    long long x;
+    stream >> x;
+    number.val = x;
+    return stream;
 }
