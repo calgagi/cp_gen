@@ -1,8 +1,19 @@
 #include "../lib/mint.hpp"
 
+class NullStream : public ostream {
+public:
+    NullStream() : ostream(nullptr) {}
+    NullStream(const NullStream &) : ostream(nullptr) {}
+};
+
+template <class T>
+const NullStream &operator<<(NullStream &&os, const T &value) { 
+    return os;
+}
+
 class mintTester {
 private:
-    static bool instantiate() {
+static bool instantiate() {
         mint a = 1000;
         int x = 10;
         a = x;
@@ -40,7 +51,6 @@ private:
         }
         mint b = -a;
         if (b != 999998997) {
-            cout << b.val << endl;
             return false;
         }
         b += 1010;
@@ -89,7 +99,37 @@ private:
             if (A[i-1] > A[i]) {
                 return false;
             }
+            ll a = A[i];
+            if (a < A[i-1]) {
+                return false;
+            }
+            if (A[i-1] > a) {
+                return false;
+            }
         }
+        sort(A.begin(), A.end(), greater<mint>());
+        for (int i = 1; i < 10000; i++) {
+            if (A[i] > A[i-1]) {
+                return false;
+            }
+            if (A[i-1] < A[i]) {
+                return false;
+            }
+            ll a = A[i];
+            if (a > A[i-1]) {
+                return false;
+            }
+            if (A[i-1] < a) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    static bool stream() {
+        mint test = 10;
+        auto null = NullStream();
+        null << test << endl;
         return true;
     }
 
@@ -101,7 +141,8 @@ public:
             {"add", add},
             {"add2", add2},
             {"subtract", subtract},
-            {"stdsort", stdsort}
+            {"stdsort", stdsort},
+            {"stream", stream}
         };
         bool ans = true;
         for (const auto& test : tests) {
