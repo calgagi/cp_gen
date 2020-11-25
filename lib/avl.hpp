@@ -199,8 +199,49 @@ private:
         assert(false); // should never make it this far
         return 0;
     }
-             
+
+    T* closestltHelper(Node* cur, T val) {
+        if (!cur) {
+            return NULL;
+        }
+        if (cur->val < val) {
+            T* ans = new T;
+            *ans = cur->val;
+            T* ans2 = closestltHelper(cur->right, val);
+            if (ans2) {
+                delete ans;
+                ans = ans2;
+            }
+            return ans;
+        }
+        return closestltHelper(cur->left, val);
+    }
+            
+    T* closestgtHelper(Node* cur, T val) {
+        if (!cur) {
+            return NULL;
+        }
+        if (val < cur->val) {
+            T* ans = new T;
+            *ans = cur->val;
+            T* ans2 = closestgtHelper(cur->left, val);
+            if (ans2) {
+                delete ans;
+                ans = ans2;
+            }
+            return ans;
+        }
+        return closestgtHelper(cur->right, val);
+    }
+            
 public:
+    T* closestlt(T val) {
+        return closestltHelper(root, val);
+    }
+
+    T* closestgt(T val) {
+        return closestgtHelper(root, val);
+    }
     int before(T val) {
         return beforeHelper(root, val);
     }
