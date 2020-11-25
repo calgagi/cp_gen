@@ -20,6 +20,8 @@ A modular and robust application to create competitive programming templates.
 * `void insert(type val)`: inserts `val` into the set in O(log(size)) time
 * `void remove(type val)`: removes a single instance of `val` in the set in O(log(size)) time
 * `int count(type val)`: returns the number of instances of `val` in the set in O(log(size)) time
+* `type* closestlt(type val)`: returns a pointer to an instance of the closest strictly less-than value than `val`, or `null` if no such value exists
+* `type* closestgt(type val)`: returns a pointer to an instance of the closest strictly greater-than value than `val`, or `null` if no such value exists
 
 #### segtree: Policy-based Segment Tree
 * `segtree<type>(int size, type identity, function<type(type, type)>) combine)`: creates a tree of size `4*size` of which all elements are equal to `identity`; `combine` is the function used to combine two tree nodes (your `combine(identity, x) = x` for all `x`)
