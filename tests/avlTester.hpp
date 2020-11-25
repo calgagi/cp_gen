@@ -179,6 +179,48 @@ private:
         return true;
     }
 
+    static bool closestgt() {
+        avl<int> item;
+        srand(time(NULL));
+        for (int i = 0; i < 100000; i++) {
+            item.insert(i);
+            if (item.closestgt(i) != NULL) 
+                return false;
+        }
+        for (int i = 0; i < 100000-1; i++)
+            if (*item.closestgt(i) != i+1)
+                return false;
+        for (int i = 0; i < 100000; i++) {
+            int x = rand() % 99999;
+            if (*item.closestgt(x) != x+1)
+                return false;
+        }
+        return true;
+    }
+
+    static bool closestlt() {
+        avl<int> item;
+        srand(time(NULL));    
+        set<int> s;
+        for (int i = 0; i < 10000; i++) {
+            int x = rand() % 10000;
+            item.insert(x);
+            s.insert(-x);
+        }
+        for (int i = 0; i < 100000; i++) {
+            int x = rand() % 10000;
+            if (item.closestlt(x) == NULL && s.upper_bound(-x) != s.end())
+                return false;
+            else if (item.closestlt(x) != NULL && s.upper_bound(-x) == s.end())
+                return false;
+            else if (item.closestlt(x) == NULL && s.upper_bound(-x) == s.end()) 
+                continue;
+            if (*item.closestlt(x) != -(*s.upper_bound(-x)))
+                return false;
+        }
+        return true;
+    }
+
 public:
     static bool runTests() {
         cout << "============ avl ============" << endl;
@@ -193,7 +235,9 @@ public:
             {"singleval", singleval},
             {"stress", stress},
             {"stress2", stress2},
-            {"before", before}
+            {"before", before},
+            {"closestgt", closestgt},
+            {"closestlt", closestlt}
         };
         bool ans = true;
         for (const auto& test : tests) {
