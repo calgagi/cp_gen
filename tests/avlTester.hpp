@@ -167,12 +167,19 @@ private:
     }
 
     static bool before() {
+        srand(time(NULL));
         avl<int> item;
         for (int i = 0; i < 10000; i++) {
             item.insert(i);
         }
         for (int i = 0; i < 10000; i++) {
             if (item.before(i) != i) {
+                return false;
+            }
+        }
+        for (int i = 0; i < 10000; i++) {
+            int x = rand() % 10000;
+            if (item.before(x) != x) {
                 return false;
             }
         }

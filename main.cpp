@@ -102,7 +102,7 @@ void output_main(fstream& new_file, const bool& USACO, const string& usacoUserna
     }
 
     new_file << "    int num_tests = 1;\n"
-                "    // cin >> num_tests;\n"
+                "    /* cin >> num_tests; */\n"
                 "    for (int i = 0; i < num_tests; i++) {\n";
 
     if (PRINT_TC) {
