@@ -15,7 +15,7 @@ A modular and robust application to create competitive programming templates.
 
 #### avl: AVL Tree Multi-set
 * `avl<type>()`: creates an empty avl tree that holds data of type `type`; `type` must have `operator<` defined
-* `int before(type val)`: finds the amount of items in the set that are of lesser than or equal value to `val` in O(log(size))
+* `int before(type val)`: finds the amount of items in the set that have strictly less-than value than `val` in O(log(size))
 * `int size()`: returns the amount of items in the set 
 * `void insert(type val)`: inserts `val` into the set in O(log(size)) time
 * `void remove(type val)`: removes a single instance of `val` in the set in O(log(size)) time

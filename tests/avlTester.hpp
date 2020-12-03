@@ -1,5 +1,3 @@
-#include "../lib/avl.hpp"
-
 class avlTester {
 private:
     static bool instantiate() {

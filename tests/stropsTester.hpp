@@ -1,5 +1,3 @@
-#include "../lib/strops.hpp"
-
 class stropsTester {
 private:
     static bool until() {

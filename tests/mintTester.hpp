@@ -1,5 +1,3 @@
-#include "../lib/mint.hpp"
-
 class NullStream : public ostream {
 public:
     NullStream() : ostream(nullptr) {}
