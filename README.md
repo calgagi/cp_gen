@@ -28,11 +28,6 @@ A modular and robust application to create competitive programming templates.
 * `void update(int pos, type val)`: updates the value at `pos` to `val` in O(log(size)) time
 * `type query(int left, int right)`: returns the range query defined by `combine` in the range [`left`, `right`] in O(log(size)) time
 
-#### mint: Modular Integer
-* `mint()`: creates a `long long` that is always modulo `1e9 + 7`; acts like an ordinary `long long` in all scenarios
-* `inv(mint a)`: finds the multiplicative inverse of `a` using Euler's theorem; keep in mind `a` and `a.MOD` must be coprime
-* `power(mint base, long long exponent)`: uses binary exponentiation to get `base^(exponent)  (modulo base.MOD)`
-
 ## Testing
 * To run tests, run `make tests`.
 * If you're interested in adding your own templates and tests, check out `./tests/README.md`.
