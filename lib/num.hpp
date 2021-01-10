@@ -2,9 +2,8 @@ const ll MOD = 1e9 + 7;
 
 void normalize(ll& a, const ll b = MOD) {
     a %= b;
-    if (a < 0) {
+    if (a < 0)
         a += b;
-    }
     return;
 }
 
@@ -37,9 +36,8 @@ ll modpow(ll base, ll exp, ll mod = MOD) {
     ll ans = 1;
     base %= mod;
     while (exp) {
-        if (exp & 1LL) {
+        if (exp & 1LL)
             ans = (ans * base) % mod;
-        }
         exp >>= 1;
         base = (base * base) % mod;
     }
@@ -54,9 +52,8 @@ ll crt(const vector<ll>& n, vector<ll> a) {
     for (int i = 0; i < s; i++) {
         normalize(a[i], n[i]);
         N *= n[i];
-        for (int j = i+1; j < s; j++) {
+        for (int j = i+1; j < s; j++)
             assert(gcd(n[i], n[j]) == 1);
-        }
     }
     for (int i = 0; i < s; i++) {
         ll b = N / n[i];

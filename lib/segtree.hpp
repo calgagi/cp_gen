@@ -7,29 +7,24 @@ private:
     int n;
 
     void updateHelper(int v, int tl, int tr, int pos, const T& val) {
-        if (tl == tr) {
+        if (tl == tr)
             tree[v] = val;
-        } 
         else {
             int tm = tl + (tr - tl) / 2;
-            if (pos <= tm) {
+            if (pos <= tm)
                 updateHelper(2*v, tl, tm, pos, val);
-            }
-            else {
+            else
                 updateHelper(2*v+1, tm+1, tr, pos, val);
-            }
             tree[v] = combine(tree[2*v], tree[2*v+1]);
         }
         return;
     }
 
     T queryHelper(int v, int tl, int tr, int left, int right) {
-        if (left > right) {
+        if (left > right)
             return identity;
-        }
-        if (tl == left && tr == right) {
+        if (tl == left && tr == right)
             return tree[v];
-        }
         int tm = tl + (tr - tl) / 2;
         return combine(
                 queryHelper(2*v, tl, tm, left, min(tm, right)),
