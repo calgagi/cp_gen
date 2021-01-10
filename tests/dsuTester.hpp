@@ -12,16 +12,15 @@ private:
                 return false;
             }
         }
-        return item.components() == 1000;
+        cpassert(item.components() == 1000);
+        return true;
     }
 
     static bool uniteeach() {
         dsu item(100000);
         for (int i = 1; i < 100000; i++) {
             item.unite(0, i);
-            if (item.components() != 100000-i) {
-                return false;
-            }
+            cpassert(item.components() == 100000-i);
         }
         return true;
     }
@@ -35,9 +34,7 @@ private:
                 c--;
                 item.unite(a, b);
             }
-            if (c != item.components() || item.find(a) != item.find(b)) {
-                return false;
-            }
+            cpassert(c == item.components() && item.find(a) == item.find(b));
         }
         return true;
     }

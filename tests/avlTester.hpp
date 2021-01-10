@@ -13,21 +13,15 @@ private:
         srand(time(NULL));
         for (int i = 0; i < 100; i++) {
             item.insert(i);
-            if (item.count(i) != 1) {
-                return false;
-            }
+            cpassert(item.count(i) == 1);
         }
         for (int i = 99; i >= 0; i--) {
             item.insert(i);
-            if (item.count(i) != 2) {
-                return false;
-            }
+            cpassert(item.count(i) == 2);
         }
         for (int i = 0; i < 1000; i++) {
             int j = (rand() % (INT_MAX - 1000)) + 1000;
-            if (item.count(j) != 0) {
-                return false;
-            }
+            cpassert(item.count(j) == 0);
         }
         return true;
     }
@@ -40,26 +34,21 @@ private:
             int j = rand() % INT_MAX;
             vals[j]++;
             item.insert(j);
-            if (item.count(j) != vals[j]) {
-                return false;
-            }
+            cpassert(item.count(j) == vals[j]);
         }
         return true;
     }
 
     static bool balance() {
         avl<int> item;
-        if (item.height() != 0) {
-            return false;
-        }
+        cpassert(item.height() == 0);
         item.insert(0);
-        if (item.height() != 1) {
-            return false;
-        }
+        cpassert(item.height() == 1);
         for (int i = 0; i < 3; i++) {
             item.insert(i);
         }
-        return item.height() == 2;
+        cpassert(item.height() == 2);
+        return true;
     }
 
     static bool balance2() {
@@ -67,13 +56,12 @@ private:
         for (int i = 0; i < 100; i++) {
             item.insert(i);
         }
-        if (item.height() > ceil(log(100)/log(2))) {
-            return false;
-        }
+        cpassert(ceil(log(100)/log(2)) >= item.height());
         for (int i = 100; i < 100000; i++) {
             item.insert(i);
         }
-        return item.height() <= ceil(log(100000)/log(2));
+        cpassert(ceil(log(100000)/log(2)) >= item.height());
+        return true;
     }
 
     static bool remove() {
@@ -81,25 +69,17 @@ private:
         for (int i = 0; i < 2000; i++) {
             item.insert(i);
         }
-        if (item.size() != 2000) {
-            return false;
-        }
+        cpassert(item.size() == 2000);
         for (int i = 0; i < 2000; i++) {
             item.insert(i);
         }
-        if (item.size() != 4000) {
-            return false;
-        }
+        cpassert(item.size() == 4000);
         for (int i = 0; i < 2000; i++) {
             item.remove(i);
             item.remove(i);
-            if (item.size() != 4000 - 2 * (i + 1)) {
-                return false;
-            }
+            cpassert(item.size() == 4000 - 2 * (i + 1));
         }
-        if (item.size() != 0) {
-            return false;
-        }
+        cpassert(item.size() == 0);
         return true;
     }
 
@@ -110,9 +90,7 @@ private:
         }
         for (int i = 0; i < 100000; i++) {
             item.remove(i);
-            if (item.size() != 100000-i-1 || item.height() > 2 * max(1.0, ceil(log(100000 - i - 1) / log(2)))) {
-                return false;
-            }
+            cpassert(!(item.size() != 100000-i-1 || item.height() > 2 * max(1.0, ceil(log(100000 - i - 1) / log(2)))));
         }
         return true;
     }
@@ -122,15 +100,11 @@ private:
         for (int i = 0; i < 10000; i++) {
             item.insert(0);
         }
-        if (item.size() != 10000 && item.height() != 1) {
-            return false;
-        }
+        cpassert(!(item.size() != 10000 && item.height() != 1));
         for (int i = 0; i < 9999; i++) {
             item.remove(0);
         }
-        if (item.size() != 1 && item.height() != 1) {
-            return false;
-        }
+        cpassert(!(item.size() != 1 && item.height() != 1));
         return true;
     }
 
@@ -171,15 +145,11 @@ private:
             item.insert(i);
         }
         for (int i = 0; i < 10000; i++) {
-            if (item.before(i) != i) {
-                return false;
-            }
+            cpassert(item.before(i) == i);
         }
         for (int i = 0; i < 10000; i++) {
             int x = rand() % 10000;
-            if (item.before(x) != x) {
-                return false;
-            }
+            cpassert(item.before(x) == x);
         }
         return true;
     }
@@ -189,16 +159,14 @@ private:
         srand(time(NULL));
         for (int i = 0; i < 100000; i++) {
             item.insert(i);
-            if (item.closestgt(i) != NULL) 
-                return false;
+            cpassert(item.closestgt(i) == i);
         }
-        for (int i = 0; i < 100000-1; i++)
-            if (*item.closestgt(i) != i+1)
-                return false;
+        for (int i = 0; i < 100000-1; i++) {
+            cpassert(item.closestgt(i) == i+1);
+        }
         for (int i = 0; i < 100000; i++) {
             int x = rand() % 99999;
-            if (*item.closestgt(x) != x+1)
-                return false;
+            cpassert(item.closestgt(x) == x+1);
         }
         return true;
     }
@@ -207,21 +175,17 @@ private:
         avl<int> item;
         srand(time(NULL));    
         set<int> s;
-        for (int i = 0; i < 10000; i++) {
-            int x = rand() % 10000;
+        for (int i = 0; i < 100; i++) {
+            int x = rand() % 1000;
             item.insert(x);
             s.insert(-x);
         }
         for (int i = 0; i < 100000; i++) {
-            int x = rand() % 10000;
-            if (item.closestlt(x) == NULL && s.upper_bound(-x) != s.end())
-                return false;
-            else if (item.closestlt(x) != NULL && s.upper_bound(-x) == s.end())
-                return false;
-            else if (item.closestlt(x) == NULL && s.upper_bound(-x) == s.end()) 
-                continue;
-            if (*item.closestlt(x) != -(*s.upper_bound(-x)))
-                return false;
+            int x = (rand() % 1000);
+            if (s.upper_bound(-x) != s.end()) {
+                cpassert(item.closestlt(x) != x);
+                cpassert(item.closestlt(x) == -(*s.upper_bound(-x)));
+            }
         }
         return true;
     }

@@ -46,7 +46,10 @@ void output_header(fstream& new_file, const bool& USACO, const string& usacoUser
     new_file << "#include<bits/stdc++.h>\n\n"
                 "using namespace std;\n\n"
                 "typedef long long ll;\n"
-                "typedef long double ld;\n\n";
+                "typedef long double ld;\n\n"
+                "#define BEGIN_NAMESPACE_CP namespace cp {\n"
+                "#define END_NAMESPACE_CP }\n\n"
+                "BEGIN_NAMESPACE_CP\n\n";
     
     return;
 }
@@ -79,6 +82,8 @@ void output_templates(fstream& new_file, const vector<string>& templates, const 
         }
         new_file << endl;
     }
+
+    new_file << "END_NAMESPACE_CP\n\n";
 
     return;
 }

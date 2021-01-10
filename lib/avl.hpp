@@ -13,26 +13,20 @@ private:
     Node* root = nullptr;
 
     int getHeight(Node* cur) {
-        if (!cur) {
+        if (!cur)
             return 0;
-        }
-        return 1 + max(
-            (cur->left ? cur->left->height : 0),
-            (cur->right ? cur->right->height : 0)
-        );
+        return 1 + max((cur->left ? cur->left->height : 0), (cur->right ? cur->right->height : 0));
     }
 
     int getTreeRef(Node* cur) {
-        if (!cur) {
+        if (!cur)
             return 0;
-        }
         return cur->ref + (cur->left ? cur->left->treeRef : 0) + (cur->right ? cur->right->treeRef : 0);
     }
 
     int getTreeSize(Node* cur) {
-        if (!cur) {
+        if (!cur)
             return 0;
-        }
         return 1 + (cur->left ? cur->left->treeSize : 0) + (cur->right ? cur->right->treeSize : 0);
     }
 
@@ -50,55 +44,41 @@ private:
     Node* rightRotate(Node* cur) {
         assert(cur != nullptr);
         assert(cur->left != nullptr);
-
         Node* newRoot = cur->left;
         Node* temp = newRoot->right;
         newRoot->right = cur;
         cur->left = temp;
-
         refresh(cur);
         refresh(newRoot);
-
         return newRoot;
     }
 
     Node* leftRotate(Node* cur) {
         assert(cur != nullptr);
         assert(cur->right != nullptr);
-
         Node* newRoot = cur->right;
         Node* temp = newRoot->left;
         newRoot->left = cur;
         cur->right = temp;
-
         refresh(cur);
         refresh(newRoot);
-
         return newRoot;
     }
 
     Node* insertHelper(Node* cur, T val) {
-        if (!cur) {
+        if (!cur)
             return new Node(val);
-        } 
-        if (val == cur->val) {
+        if (val == cur->val)
             cur->ref++;
-        }
-        else if (val < cur->val) {
+        else if (val < cur->val)
             cur->left = insertHelper(cur->left, val);
-        } 
-        else {
+        else
             cur->right = insertHelper(cur->right, val);
-        }
-
         refresh(cur);
-
-        if (getBalance(cur) >= 2 && val < cur->left->val) {
+        if (getBalance(cur) >= 2 && val < cur->left->val)
             cur = rightRotate(cur);
-        } 
-        else if (getBalance(cur) <= -2 && val > cur->right->val) {
+        else if (getBalance(cur) <= -2 && val > cur->right->val)
             cur = leftRotate(cur);
-        }
         else if (getBalance(cur) >= 2 && val > cur->left->val) {
             cur->left = leftRotate(cur->left);
             cur = rightRotate(cur);
@@ -107,14 +87,12 @@ private:
             cur->right = rightRotate(cur->right);
             cur = leftRotate(cur);
         }
-
         return cur;
     }
 
     Node* removeHelper(Node* cur, T val) {
-        if (!cur) {
+        if (!cur)
             return nullptr;
-        }
         if (val == cur->val) {
             cur->ref--;
             if (cur->ref == 0) {
@@ -129,9 +107,8 @@ private:
                 } 
                 else {
                     Node* temp = cur->right;
-                    while (temp->left) {
+                    while (temp->left)
                         temp = temp->left;
-                    }
                     cur->val = temp->val;
                     cur->ref = temp->ref;
                     temp->ref = 1;
@@ -139,21 +116,15 @@ private:
                 }
             }
         }
-        else if (val < cur->val) {
+        else if (val < cur->val)
             cur->left = removeHelper(cur->left, val);
-        } 
-        else {
+        else
             cur->right = removeHelper(cur->right, val);
-        }
-
         refresh(cur);
-
-        if (getBalance(cur) >= 2 && getBalance(cur->left) >= 0) {
+        if (getBalance(cur) >= 2 && getBalance(cur->left) >= 0)
             cur = rightRotate(cur);
-        } 
-        else if (getBalance(cur) <= -2 && getBalance(cur->right) <= 0) {
+        else if (getBalance(cur) <= -2 && getBalance(cur->right) <= 0)
             cur = leftRotate(cur);
-        }
         else if (getBalance(cur) >= 2 && getBalance(cur->left) < 0) {
             cur->left = leftRotate(cur->left);
             cur = rightRotate(cur);
@@ -162,48 +133,38 @@ private:
             cur->right = rightRotate(cur->right);
             cur = leftRotate(cur);
         }
-
         return cur;
     }
 
     int countHelper(Node* cur, T val) {
-        if (!cur) { 
+        if (!cur) 
             return 0;
-        }
-        if (val == cur->val) {
+        if (val == cur->val)
             return cur->ref;
-        }
-        else if (val < cur->val) {
+        else if (val < cur->val)
             return countHelper(cur->left, val);
-        }
-        else {
+        else
             return countHelper(cur->right, val);
-        }
         assert(false); // should never make it this far
         return 0;
     }
 
     int beforeHelper(Node* cur, T val) {
-        if (!cur) {
+        if (!cur)
             return 0;
-        }
-        if (val == cur->val) {
+        if (val == cur->val)
             return (cur->left ? cur->left->treeRef : 0);
-        }
-        else if (cur->val < val) {
+        else if (cur->val < val)
             return cur->ref + (cur->left ? cur->left->treeRef : 0) + beforeHelper(cur->right, val);
-        }
-        else {
+        else
             return beforeHelper(cur->left, val);
-        }
         assert(false); // should never make it this far
         return 0;
     }
 
     T* closestltHelper(Node* cur, T val) {
-        if (!cur) {
+        if (!cur) 
             return NULL;
-        }
         if (cur->val < val) {
             T* ans = new T;
             *ans = cur->val;
@@ -218,9 +179,8 @@ private:
     }
             
     T* closestgtHelper(Node* cur, T val) {
-        if (!cur) {
+        if (!cur)
             return NULL;
-        }
         if (val < cur->val) {
             T* ans = new T;
             *ans = cur->val;
@@ -235,13 +195,16 @@ private:
     }
             
 public:
-    T* closestlt(T val) {
-        return closestltHelper(root, val);
+    T closestlt(T val) {
+        T* res = closestltHelper(root, val);
+        return res == NULL ? val : *res;
     }
 
-    T* closestgt(T val) {
-        return closestgtHelper(root, val);
+    T closestgt(T val) {
+        T* res = closestgtHelper(root, val);
+        return res == NULL ? val : *res;
     }
+
     int before(T val) {
         return beforeHelper(root, val);
     }

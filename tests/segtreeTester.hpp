@@ -23,15 +23,9 @@ private:
         });
         for (int i = 0; i < 100; i++) {
             item.update(i, 1);
-            if (item.query(0, i) != i+1) {
-                return false;
-            }
-            else if (item.query(i, i) != 1) {
-                return false;
-            }
-            else if (item.query(i, 99) != 1) {
-                return false;
-            }
+            cpassert(item.query(0, i) == i+1);
+            cpassert(item.query(i, i) == 1);
+            cpassert(item.query(i, 99) == 1);
         }
         return true;
     }
@@ -46,9 +40,7 @@ private:
             int a = rand() % 100;
             cnt[a]++;
             item.update(a, cnt[a]);
-            if (item.query(a, a) != cnt[a]) {
-                return false;
-            }
+            cpassert(item.query(a, a) == cnt[a]);
         }
         return (clock() - start) / (double) CLOCKS_PER_SEC <= 1.0;
     }
@@ -63,9 +55,7 @@ private:
             float x = rand();
             mx = max(x, mx);
             item.update(i, x);
-            if (item.query(0, 9999) != mx) {
-                return false;
-            }
+            cpassert(item.query(0, 9999) == mx);
         }
         return true;
     }
@@ -85,9 +75,7 @@ private:
             for (int j = l; j <= r; j++) {
                 ans = max(ans, arr[j]);
             }
-            if (item.query(l, r) != ans) {
-                return false;
-            }
+            cpassert(item.query(l, r) == ans);
         }
         return true;
     }
@@ -110,9 +98,7 @@ private:
             for (int j = l; j <= r; j++) {
                 ans = max(ans, arr[j].a);
             }
-            if (item.query(l, r).a != ans) {
-                return false;
-            }
+            cpassert(item.query(l, r).a == ans);
         }
         return true;
     }
@@ -145,9 +131,7 @@ private:
                     ans.second += cnt[j].second;
                 }
             }
-            if (ans != item.query(l, r)) {
-                return false;
-            }
+            cpassert(ans == item.query(l, r));
         }
         return true;
     }

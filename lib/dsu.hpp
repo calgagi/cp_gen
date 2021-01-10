@@ -16,6 +16,7 @@ public:
     }
 
     int find(int a) {
+        assert (a >= 0 && a < link.size());
         while (a != link[a]) {
             a = link[a];
         }
