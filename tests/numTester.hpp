@@ -1,8 +1,8 @@
 class numTester {
 private:
     static bool testcrt() {
-        vector<ll> n = {5, 6, 7};
-        vector<ll> a = {3, 2, 4};
+        std::vector<ll> n = {5, 6, 7};
+        std::vector<ll> a = {3, 2, 4};
         cpassert(crt(n, a) == 158);
         n = {7,13,59,31,19};
         a = {0,12,55,25,12};
@@ -13,16 +13,40 @@ private:
         return true;
     }
 
+    static bool norm() {
+        cpassert(normalize(-10, 1) == 0);
+        cpassert(normalize(-10) == 999999997);
+        cpassert(normalize(-31) == 999999976);
+        cpassert(normalize((ll) -(1e9 + 7)) == 0);
+        cpassert(normalize(10, 7) == 3);
+        cpassert(normalize(7, 10) == 7);
+        return true;
+    }
+
+    static bool testgcd() {
+        cpassert(gcd(1, 1) == 1);    
+        cpassert(gcd(10, 2) == 2);
+        cpassert(gcd(7, 31) == 1);
+        cpassert(gcd(36, 24) == 12);
+        cpassert(gcd(-7, -7) == 7);
+        cpassert(gcd(-6, 3) == 3);
+        cpassert(gcd(3, -6) == 3);
+        cpassert(gcd(-3, 6) == 3);
+        return true;
+    }
+
 public:
     static bool runTests() {
-        cout << "============ num ============" << endl;
-        map<string, function<bool()>> tests = {
-            {"testcrt", testcrt}
+        std::cout << "============ num ============" << std::endl;
+        std::map<std::string, std::function<bool()>> tests = {
+            {"testcrt", testcrt},
+            {"norm", norm},
+            {"testgcd", testgcd}
         };
         bool ans = true;
         for (const auto& test : tests) {
             bool result = tests[test.first]();
-            cout << test.first << ": " << (result ? PASS : FAIL) << endl;
+            std::cout << test.first << ": " << (result ? PASS : FAIL) << std::endl;
             if (!result) {
                 ans = false;
             }

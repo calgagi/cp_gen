@@ -4,7 +4,7 @@ private:
         avl<int> item;
         avl<float> item2;
         avl<int64_t> item3;
-        avl<string> item4;
+        avl<std::string> item4;
         return true;
     }
 
@@ -29,7 +29,7 @@ private:
     static bool count2() {
         avl<int> item;
         srand(time(NULL));
-        map<int,int> vals;
+        std::map<int,int> vals;
         for (int i = 0; i < 100000; i++) {
             int j = rand() % INT_MAX;
             vals[j]++;
@@ -90,7 +90,7 @@ private:
         }
         for (int i = 0; i < 100000; i++) {
             item.remove(i);
-            cpassert(!(item.size() != 100000-i-1 || item.height() > 2 * max(1.0, ceil(log(100000 - i - 1) / log(2)))));
+            cpassert(!(item.size() != 100000-i-1 || item.height() > 2 * std::max(1.0, ceil(log(100000 - i - 1) / log(2)))));
         }
         return true;
     }
@@ -123,7 +123,7 @@ private:
     static bool stress2() {
         clock_t start = clock();
         avl<int> item;
-        map<int,int> inserted;
+        std::map<int,int> inserted;
         for (int i = 0; i < 100000; i++) {
             int j = rand(); 
             inserted[j]++;
@@ -174,7 +174,7 @@ private:
     static bool closestlt() {
         avl<int> item;
         srand(time(NULL));    
-        set<int> s;
+        std::set<int> s;
         for (int i = 0; i < 100; i++) {
             int x = rand() % 1000;
             item.insert(x);
@@ -192,8 +192,8 @@ private:
 
 public:
     static bool runTests() {
-        cout << "============ avl ============" << endl;
-        map<string, function<bool()>> tests = {
+        std::cout << "============ avl ============" << std::endl;
+        std::map<std::string, std::function<bool()>> tests = {
             {"instantiate", instantiate},
             {"count", count},
             {"count2", count2},
@@ -211,7 +211,7 @@ public:
         bool ans = true;
         for (const auto& test : tests) {
             bool result = tests[test.first]();
-            cout << test.first << ": " << (result ? PASS : FAIL) << endl;
+            std::cout << test.first << ": " << (result ? PASS : FAIL) << std::endl;
             if (!result) {
                 ans = false;
             }

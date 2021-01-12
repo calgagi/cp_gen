@@ -15,7 +15,7 @@ private:
     int getHeight(Node* cur) {
         if (!cur)
             return 0;
-        return 1 + max((cur->left ? cur->left->height : 0), (cur->right ? cur->right->height : 0));
+        return 1 + std::max((cur->left ? cur->left->height : 0), (cur->right ? cur->right->height : 0));
     }
 
     int getTreeRef(Node* cur) {

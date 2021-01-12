@@ -29,7 +29,7 @@ ${MAIN_FILE}: ${HEADER_FILE} ${TEST_FILE}
 
 ${HEADER_FILE}:
     $(shell \
-	printf "#include <bits/stdc++.h>\nusing namespace std;\n" > ${HEADER_FILE}; \
+	printf "#include <bits/stdc++.h>\n" > ${HEADER_FILE}; \
 	printf "#define ll long long\n" >> ${HEADER_FILE}; \
 	printf "#define ld long double\n" >> ${HEADER_FILE}; \
 	printf "#define FAIL \"\\\033[1;31mfailed\\\033[0m\"\n" >> ${HEADER_FILE}; \

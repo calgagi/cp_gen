@@ -1,8 +1,8 @@
 template<class T>
 class segtree {
 private:
-    vector<T> tree;
-    function<T (T, T)> combine;
+    std::vector<T> tree;
+    std::function<T (T, T)> combine;
     T identity; // mathematical identity element for the object T under the binary operation combine
     int n;
 
@@ -27,13 +27,13 @@ private:
             return tree[v];
         int tm = tl + (tr - tl) / 2;
         return combine(
-                queryHelper(2*v, tl, tm, left, min(tm, right)),
-                queryHelper(2*v+1, tm+1, tr, max(tm+1, left), right)
+                queryHelper(2*v, tl, tm, left, std::min(tm, right)),
+                queryHelper(2*v+1, tm+1, tr, std::max(tm+1, left), right)
         );
     }
 
 public:
-    segtree(int pn, T i, function<T (T, T)> c) : n(pn), combine(c), identity(i) {
+    segtree(int pn, T i, std::function<T (T, T)> c) : n(pn), combine(c), identity(i) {
         tree.assign(4*pn, i);
     }
 
