@@ -35,13 +35,25 @@ private:
         return true;
     }
 
+    static bool testmodpow() {
+        cpassert(modpow(0, 0) == 1);
+        cpassert(modpow(0, 1) == 0);
+        cpassert(modpow(10, 0) == 1);
+        cpassert(modpow(10, 2) == 100);
+        cpassert(modpow(1000, 100000) == 849079858);
+        cpassert(modpow(31, 162413613, 101) == 58);
+        cpassert(modpow(31, 162413613) == 5637460);
+        return true;
+    }
+
 public:
     static bool runTests() {
         std::cout << "============ num ============" << std::endl;
         std::map<std::string, std::function<bool()>> tests = {
             {"testcrt", testcrt},
             {"norm", norm},
-            {"testgcd", testgcd}
+            {"testgcd", testgcd},
+            {"testmodpow", testmodpow}
         };
         bool ans = true;
         for (const auto& test : tests) {

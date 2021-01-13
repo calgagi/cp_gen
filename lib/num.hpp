@@ -33,6 +33,7 @@ ll lcm(const ll& a, const ll& b) {
 }
 
 ll modpow(ll base, ll exp, ll mod = MOD) {
+    base = normalize(base, mod);
     ll ans = 1;
     base %= mod;
     while (exp) {
