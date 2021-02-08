@@ -37,14 +37,16 @@ ${HEADER_FILE}:
 	printf "#define cpassert(X) if (!(X)) return false;\n" >> ${HEADER_FILE}; \
 	for i in `find ../lib/ -type f -iwholename "*lib/*.hpp"`; do \
 		printf "#include \"../lib/$${i:7:-4}.hpp\"\n" >> ${HEADER_FILE}; \
-		printf "#include \"$${i:7:-4}Tester.hpp\"\n" >> ${HEADER_FILE}; \
-	done \
+	done; \
+	for i in `find . -type f -iwholename "*.hpp"`; do \
+		printf "#include \"./$${i:2:-4}.hpp\"\n" >> ${HEADER_FILE}; \
+	done; \
 	)
 
 ${TEST_FILE}:
 	$(shell \
-	for i in `find ../lib/ -type f -iwholename "*lib/*.hpp"`; do \
-		printf "\tans = $${i:7:-4}Tester::runTests() && ans;\n" >> ${TEST_FILE}; \
+	for i in `find . -type f -iwholename "*.hpp"`; do \
+		printf "\tans = $${i:2:-4}::runTests() && ans;\n" >> ${TEST_FILE}; \
 	done \
 	)
 
