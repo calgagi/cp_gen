@@ -1,8 +1,8 @@
 class numTester {
 private:
     static bool testcrt() {
-        std::vector<ll> n = {5, 6, 7};
-        std::vector<ll> a = {3, 2, 4};
+        std::vector<int64_t> n = {5, 6, 7};
+        std::vector<int64_t> a = {3, 2, 4};
         cpassert(crt(n, a) == 158);
         n = {7,13,59,31,19};
         a = {0,12,55,25,12};
@@ -17,7 +17,7 @@ private:
         cpassert(normalize(-10, 1) == 0);
         cpassert(normalize(-10) == 999999997);
         cpassert(normalize(-31) == 999999976);
-        cpassert(normalize((ll) -(1e9 + 7)) == 0);
+        cpassert(normalize((int64_t) -(1e9 + 7)) == 0);
         cpassert(normalize(10, 7) == 3);
         cpassert(normalize(7, 10) == 7);
         return true;
