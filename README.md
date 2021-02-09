@@ -3,12 +3,23 @@
 A modular and robust application to create competitive programming templates.
 
 ## Install
-* Note: must be using Linux since this program uses a syscall (`readlink`) that is only available on Linux.
-* Run `make` to compile the program. It should produce a binary called `./gen`. 
-* Add `cp_gen` to your path. Please make sure that `gen` is in the root directory of this repo since reading/writing library files to templates requires that.
+* You must be using Linux since this program uses a syscall (`readlink`) that is only available on Linux. WSL should work as well.
+* Run `make` to compile the program. It should produce a binary called `gen`. 
+* If you want to use `gen` from anywhere, add the directory `cp_gen` to your path. Please make sure that `gen` is in the root directory of this repo since it requires reading/writing library files to templates.
+
+## Usage
+* Simply enter `gen $FILENAME` to generate a C++ file. `$FILENAME` is required.
+* Everything above the `cp` namespace is unchangeable unless you modify `main.cpp` (feel free to).
+* Everything after the `cp` namespace is outputted from `user.cpp` in this repo. You can freely modify this file to your liking. <b>Make sure it includes a main function!</b>
+* Everything in the `cp` namespace is outputted from `./lib/$DS.hpp` where you can specify which `$DS`s you want to be included.
+* Example: `gen A.cpp -$DS1 -$DS2` will include everything from `./lib/DS1.hpp` and `./lib/DS2.hpp` in the `cp` namespace.
+
+## Examples
+* `gen X.cpp -dsu` will include the Disjoint Set Union data structure and generate a file called `X.cpp` in the current working directory.
+* `gen ..\above.cpp` will generate a file called `above.cpp` in the directory above the current working directory.
+* `gen A.cpp -segtree -num` will include everything from `./lib/segtree.hpp` and `./lib/num.hpp` into `A.cpp`.
 
 ## Data Structures
-
 #### dsu: Disjoint Set Union (Union Find)
 | Function | Description | Runtime |
 | --------------------- | -------------------- | ------ |
@@ -35,18 +46,6 @@ A modular and robust application to create competitive programming templates.
 | `void update(int pos, type val)` | updates the value at `pos` to `val` | O(log(size)) |
 | `type query(int left, int right)` | returns the range query defined by `combine` in the range [`left`, `right`] | O(log(size)) |
 
-## Testing
+## Tests 
 * To run tests, run `make tests`.
 * If you're interested in adding your own templates and tests, check out `./tests/README.md`.
-
-## Arguments
-* `filename.cpp` (<b>REQUIRED</b>): Creates file in current working directory called `filename.cpp` with template contents outputted to it.
-
-* `-p`: Adds printing each test case number.
-* `-u`: Adds USACO things. Expects `username` directly afterwards. For example, `-u calgagi`.
-* `-<ds>`: Adds contents from `lib/<ds>.hpp` to top of file.
-
-## Examples
-
-* `gen A.cpp`: Creates a generic template named `A.cpp`
-* `gen -c -avl B.cpp`: Creates a template that prints each test case number and has `./lib/avl.hpp` pasted at the top of the file (after includes).
