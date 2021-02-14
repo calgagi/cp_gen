@@ -162,6 +162,23 @@ private:
         return true;
     }
 
+    static bool at() {
+        avl<int> tree;
+        std::vector<int> a;
+        srand(time(NULL));
+        for (int i = 0; i < 1000000; i++) {
+            int x = rand() % INT_MAX;
+            a.push_back(x);
+            tree.insert(x);
+        } 
+        std::sort(a.begin(), a.end());
+        for (int i = 0; i < 1000000; i++) {
+            cpassert(tree.at(i) != NULL && *tree.at(i) == a[i]);
+        }
+        return true;
+    }
+
+
 public:
     static bool runTests() {
         std::cout << "============ avl ============" << std::endl;
@@ -176,7 +193,8 @@ public:
             {"stress2", stress2},
             {"before", before},
             {"closestgt", closestgt},
-            {"closestlt", closestlt}
+            {"closestlt", closestlt},
+            {"at", at}
         };
         bool ans = true;
         for (const auto& test : tests) {

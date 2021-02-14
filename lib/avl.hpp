@@ -176,7 +176,7 @@ public:
         if (!cur) {
             return NULL;
         }
-        int before = (root->left ? root->left->treeRef : 0);
+        int before = (cur->left ? cur->left->treeRef : 0);
         if (index <= before) {
             return at(cur->left, index);
         }
@@ -213,6 +213,6 @@ public:
     }
 
     T* at(int index) {
-        return (index >= size() || index < 0 ? NULL : at(root, index+1));
+        return ((index >= size() || index < 0) ? NULL : at(root, index+1));
     }
 };
