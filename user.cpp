@@ -14,7 +14,11 @@ int main() {
     /* FILE *IN = freopen((CP_GEN_FILE + string(".in")).c_str(), "r", stdin); */
     /* FILE *OUT = freopen((CP_GEN_FILE + string(".out")).c_str(), "w", stdout); */
 
-    solve();
+    int t = 1;
+    /* cin >> t; */
+    while (t--) {
+        solve();
+    }
 
     return 0;
 }

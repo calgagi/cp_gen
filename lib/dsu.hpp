@@ -1,10 +1,9 @@
 class dsu {
-private:
+public:
     std::vector<int> link;
     std::vector<int> size;
     int num_components;
 
-public:
     dsu(int N) {
         num_components = N;
         size.assign(N, 1);
@@ -15,7 +14,6 @@ public:
     }
 
     int find(int a) {
-        assert (a >= 0 && a < link.size());
         while (a != link[a])
             a = link[a];
         return a;
