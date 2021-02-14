@@ -1,33 +1,17 @@
 template <class T> 
 class avl {
-private:
+public:
     struct Node {
         T val;
-        Node* left = nullptr, * right = nullptr;
-        int height = 1, treeSize = 1, ref = 1, treeRef = 1;
+        Node* left = NULL, * right = NULL;
+        int height = 1, ref = 1, treeRef = 1;
         Node(T v) : val(v) {};
-        Node() {};
     };
 
-    // Note: this is an AVL tree
-    Node* root = nullptr;
+    Node* root = NULL;
 
     int getHeight(Node* cur) {
-        if (!cur)
-            return 0;
-        return 1 + std::max((cur->left ? cur->left->height : 0), (cur->right ? cur->right->height : 0));
-    }
-
-    int getTreeRef(Node* cur) {
-        if (!cur)
-            return 0;
-        return cur->ref + (cur->left ? cur->left->treeRef : 0) + (cur->right ? cur->right->treeRef : 0);
-    }
-
-    int getTreeSize(Node* cur) {
-        if (!cur)
-            return 0;
-        return 1 + (cur->left ? cur->left->treeSize : 0) + (cur->right ? cur->right->treeSize : 0);
+        return (!cur ? 0 : 1 + std::max((cur->left ? cur->left->height : 0), (cur->right ? cur->right->height : 0)));
     }
 
     int getBalance(Node* cur) {
@@ -36,14 +20,11 @@ private:
 
     void refresh(Node* cur) {
         cur->height = getHeight(cur);
-        cur->treeSize = getTreeSize(cur);
-        cur->treeRef = getTreeRef(cur);
+        cur->treeRef = cur->ref + (cur->left ? cur->left->treeRef : 0) + (cur->right ? cur->right->treeRef : 0);
         return;
     }
 
     Node* rightRotate(Node* cur) {
-        assert(cur != nullptr);
-        assert(cur->left != nullptr);
         Node* newRoot = cur->left;
         Node* temp = newRoot->right;
         newRoot->right = cur;
@@ -54,8 +35,6 @@ private:
     }
 
     Node* leftRotate(Node* cur) {
-        assert(cur != nullptr);
-        assert(cur->right != nullptr);
         Node* newRoot = cur->right;
         Node* temp = newRoot->left;
         newRoot->left = cur;
@@ -65,20 +44,26 @@ private:
         return newRoot;
     }
 
-    Node* insertHelper(Node* cur, T val) {
-        if (!cur)
+    Node* insert(Node* cur, T val) {
+        if (!cur) {
             return new Node(val);
-        if (val == cur->val)
+        }
+        if (val == cur->val) {
             cur->ref++;
-        else if (val < cur->val)
-            cur->left = insertHelper(cur->left, val);
-        else
-            cur->right = insertHelper(cur->right, val);
+        }
+        else if (val < cur->val) {
+            cur->left = insert(cur->left, val);
+        }
+        else {
+            cur->right = insert(cur->right, val);
+        }
         refresh(cur);
-        if (getBalance(cur) >= 2 && val < cur->left->val)
+        if (getBalance(cur) >= 2 && val < cur->left->val) {
             cur = rightRotate(cur);
-        else if (getBalance(cur) <= -2 && val > cur->right->val)
+        }
+        else if (getBalance(cur) <= -2 && val > cur->right->val) {
             cur = leftRotate(cur);
+        }
         else if (getBalance(cur) >= 2 && val > cur->left->val) {
             cur->left = leftRotate(cur->left);
             cur = rightRotate(cur);
@@ -90,15 +75,16 @@ private:
         return cur;
     }
 
-    Node* removeHelper(Node* cur, T val) {
-        if (!cur)
-            return nullptr;
+    Node* remove(Node* cur, T val) {
+        if (!cur) {
+            return NULL;
+        }
         if (val == cur->val) {
             cur->ref--;
             if (cur->ref == 0) {
                 if (!cur->left && !cur->right) {
                     delete cur;
-                    return nullptr;
+                    return NULL;
                 }
                 else if (!cur->left || !cur->right) {
                     Node* temp = (cur->left ? cur->left : cur->right);
@@ -112,19 +98,23 @@ private:
                     cur->val = temp->val;
                     cur->ref = temp->ref;
                     temp->ref = 1;
-                    cur->right = removeHelper(cur->right, temp->val);
+                    cur->right = remove(cur->right, temp->val);
                 }
             }
         }
-        else if (val < cur->val)
-            cur->left = removeHelper(cur->left, val);
-        else
-            cur->right = removeHelper(cur->right, val);
+        else if (val < cur->val) {
+            cur->left = remove(cur->left, val);
+        }
+        else {
+            cur->right = remove(cur->right, val);
+        }
         refresh(cur);
-        if (getBalance(cur) >= 2 && getBalance(cur->left) >= 0)
+        if (getBalance(cur) >= 2 && getBalance(cur->left) >= 0) {
             cur = rightRotate(cur);
-        else if (getBalance(cur) <= -2 && getBalance(cur->right) <= 0)
+        }
+        else if (getBalance(cur) <= -2 && getBalance(cur->right) <= 0) {
             cur = leftRotate(cur);
+        }
         else if (getBalance(cur) >= 2 && getBalance(cur->left) < 0) {
             cur->left = leftRotate(cur->left);
             cur = rightRotate(cur);
@@ -136,98 +126,93 @@ private:
         return cur;
     }
 
-    int countHelper(Node* cur, T val) {
-        if (!cur) 
-            return 0;
-        if (val == cur->val)
-            return cur->ref;
-        else if (val < cur->val)
-            return countHelper(cur->left, val);
-        else
-            return countHelper(cur->right, val);
-        assert(false); // should never make it this far
-        return 0;
-    }
 
-    int beforeHelper(Node* cur, T val) {
-        if (!cur)
+    int size_before(Node* cur, T val) {
+        if (!cur) {
             return 0;
-        if (val == cur->val)
+        }
+        if (val == cur->val) {
             return (cur->left ? cur->left->treeRef : 0);
-        else if (cur->val < val)
-            return cur->ref + (cur->left ? cur->left->treeRef : 0) + beforeHelper(cur->right, val);
-        else
-            return beforeHelper(cur->left, val);
-        assert(false); // should never make it this far
-        return 0;
+        }
+        else if (cur->val < val) {
+            return cur->ref + (cur->left ? cur->left->treeRef : 0) + size_before(cur->right, val);
+        }
+        return size_before(cur->left, val);
     }
 
-    T* closestltHelper(Node* cur, T val) {
-        if (!cur) 
+    T* closest_lt(Node* cur, T val) {
+        if (!cur) {
             return NULL;
+        }
         if (cur->val < val) {
-            T* ans = new T;
-            *ans = cur->val;
-            T* ans2 = closestltHelper(cur->right, val);
+            T* ans = new T(cur->val);
+            T* ans2 = closest_lt(cur->right, val);
             if (ans2) {
                 delete ans;
                 ans = ans2;
             }
             return ans;
         }
-        return closestltHelper(cur->left, val);
+        return closest_lt(cur->left, val);
     }
             
-    T* closestgtHelper(Node* cur, T val) {
-        if (!cur)
+    T* closest_gt(Node* cur, T val) {
+        if (!cur) {
             return NULL;
+        }
         if (val < cur->val) {
-            T* ans = new T;
-            *ans = cur->val;
-            T* ans2 = closestgtHelper(cur->left, val);
+            T* ans = new T(cur->val);
+            T* ans2 = closest_gt(cur->left, val);
             if (ans2) {
                 delete ans;
                 ans = ans2;
             }
             return ans;
         }
-        return closestgtHelper(cur->right, val);
-    }
-            
-public:
-    T closestlt(T val) {
-        T* res = closestltHelper(root, val);
-        return res == NULL ? val : *res;
+        return closest_gt(cur->right, val);
     }
 
-    T closestgt(T val) {
-        T* res = closestgtHelper(root, val);
-        return res == NULL ? val : *res;
+    T* at(Node* cur, int index) {
+        if (!cur) {
+            return NULL;
+        }
+        int before = (root->left ? root->left->treeRef : 0);
+        if (index <= before) {
+            return at(cur->left, index);
+        }
+        else if (index <= before + cur->ref) {
+            return new T(cur->val);
+        }
+        return at(cur->right, index - (before + cur->ref));
     }
 
-    int before(T val) {
-        return beforeHelper(root, val);
+    T* closest_lt(T val) {
+        return closest_lt(root, val);
     }
 
-    int height() {
-        return getHeight(root);
+    T* closest_gt(T val) {
+        return closest_gt(root, val);
+    }
+
+    int size_before(T val) {
+        return size_before(root, val);
     }
 
     int size() {
-        return getTreeRef(root);
+        return (!root ? 0 : root->treeRef); 
     }
 
     void insert(T val) {
-        root = insertHelper(root, val);
+        root = insert(root, val);
         return;
     }     
 
     void remove(T val) {
-        root = removeHelper(root, val);    
+        root = remove(root, val);    
         return;
     }
 
-    int count(T val) {
-        return countHelper(root, val);
+    T* at(int index) {
+        return (index >= size() || index < 0 ? NULL : at(root, index+1));
     }
 };

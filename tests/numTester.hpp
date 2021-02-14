@@ -1,5 +1,5 @@
 class numTester {
-private:
+public:
     static bool testcrt() {
         std::vector<int64_t> n = {5, 6, 7};
         std::vector<int64_t> a = {3, 2, 4};
@@ -46,7 +46,6 @@ private:
         return true;
     }
 
-public:
     static bool runTests() {
         std::cout << "============ num ============" << std::endl;
         std::map<std::string, std::function<bool()>> tests = {

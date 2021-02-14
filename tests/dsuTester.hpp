@@ -1,5 +1,5 @@
 class dsuTester {
-private:
+public:
     static bool instantiate() {
         dsu DSU(10);
         return true;
@@ -50,7 +50,6 @@ private:
         return (clock() - start) / (double) CLOCKS_PER_SEC <= 1.0;
     }
 
-public:
     static bool runTests() {
         std::cout << "============ dsu ============" << std::endl;
         std::map<std::string, std::function<bool()>> tests = {
