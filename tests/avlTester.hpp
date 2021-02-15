@@ -1,5 +1,36 @@
 class avlTester {
 private:
+    static bool count() {
+        avl<int> item;
+        srand(time(NULL));
+        for (int i = 0; i < 100; i++) {
+            item.insert(i);
+            cpassert(item.count(i) == 1);
+        }
+        for (int i = 99; i >= 0; i--) {
+            item.insert(i);
+            cpassert(item.count(i) == 2);
+        }
+        for (int i = 0; i < 1000; i++) {
+            int j = (rand() % (INT_MAX - 1000)) + 1000;
+            cpassert(item.count(j) == 0);
+        }
+        return true;
+    }
+
+    static bool count2() {
+        avl<int> item;
+        srand(time(NULL));
+        std::map<int,int> vals;
+        for (int i = 0; i < 100000; i++) {
+            int j = rand() % INT_MAX;
+            vals[j]++;
+            item.insert(j);
+            cpassert(item.count(j) == vals[j]);
+        }
+        return true;
+    }
+
     static bool instantiate() {
         avl<int> item;
         avl<float> item2;
@@ -173,11 +204,10 @@ private:
         } 
         std::sort(a.begin(), a.end());
         for (int i = 0; i < 1000000; i++) {
-            cpassert(tree.at(i) != NULL && *tree.at(i) == a[i]);
+            cpassert(tree.at(i) == a[i]);
         }
         return true;
     }
-
 
 public:
     static bool runTests() {
@@ -194,7 +224,9 @@ public:
             {"before", before},
             {"closestgt", closestgt},
             {"closestlt", closestlt},
-            {"at", at}
+            {"at", at},
+            {"count", count},
+            {"count2", count2}
         };
         bool ans = true;
         for (const auto& test : tests) {

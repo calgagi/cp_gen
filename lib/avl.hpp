@@ -126,7 +126,6 @@ public:
         return cur;
     }
 
-
     int size_before(Node* cur, T val) {
         if (!cur) {
             return 0;
@@ -140,62 +139,26 @@ public:
         return size_before(cur->left, val);
     }
 
-    T* closest_lt(Node* cur, T val) {
-        if (!cur) {
-            return NULL;
-        }
-        if (cur->val < val) {
-            T* ans = new T(cur->val);
-            T* ans2 = closest_lt(cur->right, val);
-            if (ans2) {
-                delete ans;
-                ans = ans2;
-            }
-            return ans;
-        }
-        return closest_lt(cur->left, val);
-    }
-            
-    T* closest_gt(Node* cur, T val) {
-        if (!cur) {
-            return NULL;
-        }
-        if (val < cur->val) {
-            T* ans = new T(cur->val);
-            T* ans2 = closest_gt(cur->left, val);
-            if (ans2) {
-                delete ans;
-                ans = ans2;
-            }
-            return ans;
-        }
-        return closest_gt(cur->right, val);
+    int count(Node* cur, T val) {
+        return (!cur ? 0 : (cur->val == val ? cur->ref : (val < cur->val ? count(cur->left, val) : count(cur->right, val))));
     }
 
-    T* at(Node* cur, int index) {
+    T at(Node* cur, int index) {
         if (!cur) {
-            return NULL;
+            return T();
         }
         int before = (cur->left ? cur->left->treeRef : 0);
         if (index <= before) {
             return at(cur->left, index);
         }
         else if (index <= before + cur->ref) {
-            return new T(cur->val);
+            return cur->val;
         }
         return at(cur->right, index - (before + cur->ref));
     }
 
-    T* closest_lt(T val) {
-        return closest_lt(root, val);
-    }
-
-    T* closest_gt(T val) {
-        return closest_gt(root, val);
-    }
-
-    int size_before(T val) {
-        return size_before(root, val);
+    int count(T val) {
+        return count(root, val);
     }
 
     int size() {
@@ -212,7 +175,24 @@ public:
         return;
     }
 
-    T* at(int index) {
-        return ((index >= size() || index < 0) ? NULL : at(root, index+1));
+    int size_before(T val) {
+        return size_before(root, val);
+    }
+
+    T at(int index) {
+        if (index >= size() || index < 0) {
+            throw std::out_of_range("cp::avl.at(): bad index");
+        }
+        return at(root, index+1);
+    }
+
+    T* closest_lt(T val) {
+        int before = size_before(val);
+        return (before - 1 < 0 ? NULL : new T(at(before - 1)));
+    }
+
+    T* closest_gt(T val) {
+        int before = size_before(val), cnt = count(val);
+        return (before + cnt < size() ? new T(at(before + cnt)) : NULL);
     }
 };
