@@ -145,7 +145,7 @@ private:
             }
             return (a.first < b.first ? b : a);
         });
-        for (int i = 0; i < 100000; i++) {
+        for (int i = 0; i < 1000000; i++) {
             int p = rand() % 100, a = rand() % 100;
             item.update(p, std::make_pair(a, rand() % 10));
             item.query(rand() % 500000, (rand() % 500000) + 500000);
