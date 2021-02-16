@@ -1,32 +1,32 @@
 template <class T> 
 class avl {
 public:
-    struct Node {
+    struct node {
         T val;
-        Node* left = NULL, * right = NULL;
+        node* left = NULL, * right = NULL;
         int height = 1, ref = 1, treeRef = 1;
-        Node(T v) : val(v) {};
+        node(T v) : val(v) {};
     };
 
-    Node* root = NULL;
+    node* root = NULL;
 
-    int getHeight(Node* cur) {
+    int get_height(node* cur) {
         return (!cur ? 0 : 1 + std::max((cur->left ? cur->left->height : 0), (cur->right ? cur->right->height : 0)));
     }
 
-    int getBalance(Node* cur) {
-        return (!cur ? 0 : getHeight(cur->left) - getHeight(cur->right));
+    int get_balance(node* cur) {
+        return (!cur ? 0 : get_height(cur->left) - get_height(cur->right));
     }
 
-    void refresh(Node* cur) {
-        cur->height = getHeight(cur);
+    void refresh(node* cur) {
+        cur->height = get_height(cur);
         cur->treeRef = cur->ref + (cur->left ? cur->left->treeRef : 0) + (cur->right ? cur->right->treeRef : 0);
         return;
     }
 
-    Node* rightRotate(Node* cur) {
-        Node* newRoot = cur->left;
-        Node* temp = newRoot->right;
+    node* right_rotate(node* cur) {
+        node* newRoot = cur->left;
+        node* temp = newRoot->right;
         newRoot->right = cur;
         cur->left = temp;
         refresh(cur);
@@ -34,9 +34,9 @@ public:
         return newRoot;
     }
 
-    Node* leftRotate(Node* cur) {
-        Node* newRoot = cur->right;
-        Node* temp = newRoot->left;
+    node* left_rotate(node* cur) {
+        node* newRoot = cur->right;
+        node* temp = newRoot->left;
         newRoot->left = cur;
         cur->right = temp;
         refresh(cur);
@@ -44,9 +44,9 @@ public:
         return newRoot;
     }
 
-    Node* insert(Node* cur, T val) {
+    node* insert(node* cur, T val) {
         if (!cur) {
-            return new Node(val);
+            return new node(val);
         }
         if (val == cur->val) {
             cur->ref++;
@@ -58,24 +58,24 @@ public:
             cur->right = insert(cur->right, val);
         }
         refresh(cur);
-        if (getBalance(cur) >= 2 && val < cur->left->val) {
-            cur = rightRotate(cur);
+        if (get_balance(cur) >= 2 && val < cur->left->val) {
+            cur = right_rotate(cur);
         }
-        else if (getBalance(cur) <= -2 && val > cur->right->val) {
-            cur = leftRotate(cur);
+        else if (get_balance(cur) <= -2 && val > cur->right->val) {
+            cur = left_rotate(cur);
         }
-        else if (getBalance(cur) >= 2 && val > cur->left->val) {
-            cur->left = leftRotate(cur->left);
-            cur = rightRotate(cur);
+        else if (get_balance(cur) >= 2 && val > cur->left->val) {
+            cur->left = left_rotate(cur->left);
+            cur = right_rotate(cur);
         }
-        else if (getBalance(cur) <= -2 && val < cur->right->val) {
-            cur->right = rightRotate(cur->right);
-            cur = leftRotate(cur);
+        else if (get_balance(cur) <= -2 && val < cur->right->val) {
+            cur->right = right_rotate(cur->right);
+            cur = left_rotate(cur);
         }
         return cur;
     }
 
-    Node* remove(Node* cur, T val) {
+    node* remove(node* cur, T val) {
         if (!cur) {
             return NULL;
         }
@@ -87,12 +87,12 @@ public:
                     return NULL;
                 }
                 else if (!cur->left || !cur->right) {
-                    Node* temp = (cur->left ? cur->left : cur->right);
+                    node* temp = (cur->left ? cur->left : cur->right);
                     delete cur;
                     cur = temp;
                 } 
                 else {
-                    Node* temp = cur->right;
+                    node* temp = cur->right;
                     while (temp->left)
                         temp = temp->left;
                     cur->val = temp->val;
@@ -109,24 +109,24 @@ public:
             cur->right = remove(cur->right, val);
         }
         refresh(cur);
-        if (getBalance(cur) >= 2 && getBalance(cur->left) >= 0) {
-            cur = rightRotate(cur);
+        if (get_balance(cur) >= 2 && get_balance(cur->left) >= 0) {
+            cur = right_rotate(cur);
         }
-        else if (getBalance(cur) <= -2 && getBalance(cur->right) <= 0) {
-            cur = leftRotate(cur);
+        else if (get_balance(cur) <= -2 && get_balance(cur->right) <= 0) {
+            cur = left_rotate(cur);
         }
-        else if (getBalance(cur) >= 2 && getBalance(cur->left) < 0) {
-            cur->left = leftRotate(cur->left);
-            cur = rightRotate(cur);
+        else if (get_balance(cur) >= 2 && get_balance(cur->left) < 0) {
+            cur->left = left_rotate(cur->left);
+            cur = right_rotate(cur);
         }
-        else if (getBalance(cur) <= -2 && getBalance(cur->right) > 0) {
-            cur->right = rightRotate(cur->right);
-            cur = leftRotate(cur);
+        else if (get_balance(cur) <= -2 && get_balance(cur->right) > 0) {
+            cur->right = right_rotate(cur->right);
+            cur = left_rotate(cur);
         }
         return cur;
     }
 
-    int size_before(Node* cur, T val) {
+    int size_before(node* cur, T val) {
         if (!cur) {
             return 0;
         }
@@ -139,11 +139,11 @@ public:
         return size_before(cur->left, val);
     }
 
-    int count(Node* cur, T val) {
+    int count(node* cur, T val) {
         return (!cur ? 0 : (cur->val == val ? cur->ref : (val < cur->val ? count(cur->left, val) : count(cur->right, val))));
     }
 
-    T at(Node* cur, int index) {
+    T at(node* cur, int index) {
         if (!cur) {
             return T();
         }

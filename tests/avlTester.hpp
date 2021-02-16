@@ -41,13 +41,13 @@ private:
 
     static bool balance() {
         avl<int> item;
-        cpassert(abs(item.getBalance(item.root)) <= 1);
+        cpassert(abs(item.get_balance(item.root)) <= 1);
         item.insert(0);
-        cpassert(abs(item.getBalance(item.root)) <= 1);
+        cpassert(abs(item.get_balance(item.root)) <= 1);
         for (int i = 0; i < 3; i++) {
             item.insert(i);
         }
-        cpassert(abs(item.getBalance(item.root)) <= 1);
+        cpassert(abs(item.get_balance(item.root)) <= 1);
         return true;
     }
 
@@ -56,11 +56,11 @@ private:
         for (int i = 0; i < 100; i++) {
             item.insert(i);
         }
-        cpassert(abs(item.getBalance(item.root)) <= 1);
+        cpassert(abs(item.get_balance(item.root)) <= 1);
         for (int i = 100; i < 100000; i++) {
             item.insert(i);
         }
-        cpassert(abs(item.getBalance(item.root)) <= 1);
+        cpassert(abs(item.get_balance(item.root)) <= 1);
         return true;
     }
 
@@ -91,7 +91,7 @@ private:
         for (int i = 0; i < 100000; i++) {
             item.remove(i);
             cpassert(item.size() == 100000-i-1); 
-            cpassert(abs(item.getBalance(item.root)) <= 1);
+            cpassert(abs(item.get_balance(item.root)) <= 1);
         }
         return true;
     }
@@ -101,12 +101,12 @@ private:
         for (int i = 0; i < 10000; i++) {
             item.insert(0);
         }
-        cpassert(abs(item.getBalance(item.root)) <= 1);
+        cpassert(abs(item.get_balance(item.root)) <= 1);
         cpassert(item.size() == 10000);
         for (int i = 0; i < 9999; i++) {
             item.remove(0);
         }
-        cpassert(abs(item.getBalance(item.root)) <= 1);
+        cpassert(abs(item.get_balance(item.root)) <= 1);
         cpassert(item.size() == 1);
         return true;
     }
