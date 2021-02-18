@@ -73,21 +73,10 @@ void output_templates(fstream& new_file, const vector<string>& templates) {
     string gen_path = pathToGen();
     gen_path += "lib/";
 
-    new_file << "namespace cp {\n\n";
-
     for (const string& ds : templates) {
-        fstream in_file;
-        in_file.open(gen_path + ds + ".hpp");
-        if (!in_file.is_open()) {
-            error("Could not find file " + ds + ".hpp in " + gen_path);
-        }
-        string line;
-        while (getline(in_file, line)) {
-            new_file << "\t" << line << endl;
-        }
+        output_file(new_file, gen_path + ds + ".hpp");
         new_file << endl;
     }
-    new_file << "}\n";
 
     return;
 }

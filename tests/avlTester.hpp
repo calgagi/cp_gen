@@ -21,7 +21,7 @@ private:
     static bool count2() {
         avl<int> item;
         srand(time(NULL));
-        std::map<int,int> vals;
+        map<int,int> vals;
         for (int i = 0; i < 100000; i++) {
             int j = rand() % INT_MAX;
             vals[j]++;
@@ -35,7 +35,7 @@ private:
         avl<int> item;
         avl<float> item2;
         avl<int64_t> item3;
-        avl<std::string> item4;
+        avl<string> item4;
         return true;
     }
 
@@ -126,7 +126,7 @@ private:
     static bool stress2() {
         clock_t start = clock();
         avl<int> item;
-        std::map<int,int> inserted;
+        map<int,int> inserted;
         for (int i = 0; i < 100000; i++) {
             int j = rand(); 
             inserted[j]++;
@@ -177,7 +177,7 @@ private:
     static bool closestlt() {
         avl<int> item;
         srand(time(NULL));    
-        std::set<int> s;
+        set<int> s;
         for (int i = 0; i < 100; i++) {
             int x = rand() % 1000;
             item.insert(x);
@@ -195,14 +195,14 @@ private:
 
     static bool at() {
         avl<int> tree;
-        std::vector<int> a;
+        vector<int> a;
         srand(time(NULL));
         for (int i = 0; i < 1000000; i++) {
             int x = rand() % INT_MAX;
             a.push_back(x);
             tree.insert(x);
         } 
-        std::sort(a.begin(), a.end());
+        sort(a.begin(), a.end());
         for (int i = 0; i < 1000000; i++) {
             cpassert(tree.at(i) == a[i]);
         }
@@ -211,8 +211,8 @@ private:
 
 public:
     static bool runTests() {
-        std::cout << "============ avl ============" << std::endl;
-        std::map<std::string, std::function<bool()>> tests = {
+        cout << "============ avl ============" << endl;
+        map<string, function<bool()>> tests = {
             {"instantiate", instantiate},
             {"balance", balance},
             {"balance2", balance2},
@@ -231,7 +231,7 @@ public:
         bool ans = true;
         for (const auto& test : tests) {
             bool result = tests[test.first]();
-            std::cout << test.first << ": " << (result ? PASS : FAIL) << std::endl;
+            cout << test.first << ": " << (result ? PASS : FAIL) << endl;
             if (!result) {
                 ans = false;
             }

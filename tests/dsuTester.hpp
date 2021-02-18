@@ -51,8 +51,8 @@ public:
     }
 
     static bool runTests() {
-        std::cout << "============ dsu ============" << std::endl;
-        std::map<std::string, std::function<bool()>> tests = {
+        cout << "============ dsu ============" << endl;
+        map<string, function<bool()>> tests = {
             {"instantiate", instantiate},
             {"nounite", nounite},
             {"uniteeach", uniteeach},
@@ -62,7 +62,7 @@ public:
         bool ans = true;
         for (const auto& test : tests) {
             bool result = tests[test.first]();
-            std::cout << test.first << ": " << (result ? PASS : FAIL) << std::endl;
+            cout << test.first << ": " << (result ? PASS : FAIL) << endl;
             if (!result) {
                 ans = false;
             }

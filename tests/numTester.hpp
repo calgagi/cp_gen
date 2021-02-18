@@ -1,8 +1,8 @@
 class numTester {
 public:
     static bool testcrt() {
-        std::vector<int64_t> n = {5, 6, 7};
-        std::vector<int64_t> a = {3, 2, 4};
+        vector<int64_t> n = {5, 6, 7};
+        vector<int64_t> a = {3, 2, 4};
         cpassert(crt(n, a) == 158);
         n = {7,13,59,31,19};
         a = {0,12,55,25,12};
@@ -47,8 +47,8 @@ public:
     }
 
     static bool runTests() {
-        std::cout << "============ num ============" << std::endl;
-        std::map<std::string, std::function<bool()>> tests = {
+        cout << "============ num ============" << endl;
+        map<string, function<bool()>> tests = {
             {"testcrt", testcrt},
             {"norm", norm},
             {"testgcd", testgcd},
@@ -57,7 +57,7 @@ public:
         bool ans = true;
         for (const auto& test : tests) {
             bool result = tests[test.first]();
-            std::cout << test.first << ": " << (result ? PASS : FAIL) << std::endl;
+            cout << test.first << ": " << (result ? PASS : FAIL) << endl;
             if (!result) {
                 ans = false;
             }

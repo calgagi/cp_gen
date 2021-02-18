@@ -11,7 +11,7 @@ public:
     node* root = NULL;
 
     int get_height(node* cur) {
-        return (!cur ? 0 : 1 + std::max((cur->left ? cur->left->height : 0), (cur->right ? cur->right->height : 0)));
+        return (!cur ? 0 : 1 + max((cur->left ? cur->left->height : 0), (cur->right ? cur->right->height : 0)));
     }
 
     int get_balance(node* cur) {
@@ -181,7 +181,7 @@ public:
 
     T at(int index) {
         if (index >= size() || index < 0) {
-            throw std::out_of_range("cp::avl.at(): bad index");
+            throw out_of_range("cp::avl.at(): bad index");
         }
         return at(root, index+1);
     }

@@ -2,7 +2,7 @@ template<class T>
 class segtree {
 public:
     T identity; // mathematical identity element for the object T under the binary operation combine
-    std::function<T (T, T)> combine;
+    function<T (T, T)> combine;
     int64_t n;
 
     struct node {
@@ -40,11 +40,11 @@ public:
             return cur->val;
         }
         int tm = tl + (tr - tl) / 2;
-        return combine(query(cur->left, tl, tm, left, std::min(tm, right)),
-                       query(cur->right, tm+1, tr, std::max(tm+1, left), right));
+        return combine(query(cur->left, tl, tm, left, min(tm, right)),
+                       query(cur->right, tm+1, tr, max(tm+1, left), right));
     }
 
-    segtree(int64_t p, T i, std::function<T (T, T)> c) : n(p), combine(c), identity(i) {}
+    segtree(int64_t p, T i, function<T (T, T)> c) : n(p), combine(c), identity(i) {}
 
     void update(int pos, T val) {
         root = update(root, 0, n-1, pos, val);

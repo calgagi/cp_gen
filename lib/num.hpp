@@ -11,19 +11,19 @@ int64_t normalize(const int64_t a, const int64_t b = MOD) {
 int64_t gcd(int64_t a, int64_t b) {
     while (b) {
         a %= b;
-        std::swap(a, b);
+        swap(a, b);
     }
     return abs(a);
 }
 
-std::pair<int64_t, int64_t> egcd(int64_t a, int64_t b) {
-    std::pair<int64_t, int64_t> ans = {1, 0};
+pair<int64_t, int64_t> egcd(int64_t a, int64_t b) {
+    pair<int64_t, int64_t> ans = {1, 0};
     int64_t x1 = 0, y1 = 0, a1 = a, b1 = b ;
     while (b1) {
         int64_t q = a1 / b1;
-        std::tie(ans.first, x1) = std::make_tuple(x1, ans.first - q * x1);
-        std::tie(ans.second, y1) = std::make_tuple(y1, ans.second - q * y1);
-        std::tie(a1, b1) = std::make_tuple(b1, a1 - q * b1);
+        tie(ans.first, x1) = make_tuple(x1, ans.first - q * x1);
+        tie(ans.second, y1) = make_tuple(y1, ans.second - q * y1);
+        tie(a1, b1) = make_tuple(b1, a1 - q * b1);
     }
     return ans;
 }
@@ -47,7 +47,7 @@ int64_t modpow(int64_t base, int64_t exp, int64_t mod = MOD) {
 }
 
 // make sure gcd(n[i], n[j]) == 1
-int64_t crt(const std::vector<int64_t>& n, std::vector<int64_t> a) {
+int64_t crt(const vector<int64_t>& n, vector<int64_t> a) {
     int64_t x = 0;
     int64_t N = 1;
     int s = n.size();
@@ -62,9 +62,9 @@ int64_t crt(const std::vector<int64_t>& n, std::vector<int64_t> a) {
     return normalize(x, N);
 }
 
-std::vector<bool> eratosthenes(const int n, std::vector<int>& primes) {
+vector<bool> eratosthenes(const int n, vector<int>& primes) {
     primes = {1};
-    std::vector<bool> is_composite(n+1);
+    vector<bool> is_composite(n+1);
     for (int i = 2; i <= n; i++) {
         if (!is_composite[i]) {
             primes.push_back(i);

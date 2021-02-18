@@ -1,7 +1,7 @@
 class dsu {
 public:
-    std::vector<int> link;
-    std::vector<int> size;
+    vector<int> link;
+    vector<int> size;
     int num_components;
 
     dsu(int N) {
@@ -25,7 +25,7 @@ public:
         if (a == b)
             return false;
         if (size[a] > size[b])
-            std::swap(a, b);
+            swap(a, b);
         link[a] = b;
         size[b] += size[a];
         num_components--;
