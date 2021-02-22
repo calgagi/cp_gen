@@ -62,16 +62,16 @@ private:
 
     static bool maxtree2() {
         srand(time(NULL));
-        segtree<int64_t> item(100, 0, [&](int64_t a, int64_t b) -> int64_t {
+        segtree<long long> item(100, 0, [&](long long a, long long b) -> long long {
             return max(a, b);
         });
-        vector<int64_t> arr(100, 0);
+        vector<long long> arr(100, 0);
         for (int i = 0; i < 10000; i++) {
-            int64_t x = rand(), p = rand() % 100;
+            long long x = rand(), p = rand() % 100;
             arr[p] = x;
             item.update(p, x);
             int l = rand() % 50, r = (rand() % 50) + 50;
-            int64_t ans = 0;
+            long long ans = 0;
             for (int j = l; j <= r; j++) {
                 ans = max(ans, arr[j]);
             }

@@ -11,8 +11,8 @@ int main() {
     cin.tie(NULL);
     srand(chrono::steady_clock::now().time_since_epoch().count());
 
-    /* FILE *IN = freopen((CP_GEN_FILE + string(".in")).c_str(), "r", stdin); */
-    /* FILE *OUT = freopen((CP_GEN_FILE + string(".out")).c_str(), "w", stdout); */
+    /* FILE *IN = freopen(FILENAME_IN, "r", stdin); */
+    /* FILE *OUT = freopen(FILENAME_OUT, "w", stdout); */
 
     int t = 1;
     /* cin >> t; */

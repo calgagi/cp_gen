@@ -3,7 +3,7 @@ class segtree {
 public:
     T identity; // mathematical identity element for the object T under the binary operation combine
     function<T (T, T)> combine;
-    int64_t n;
+    long long n;
 
     struct node {
         T val;
@@ -12,7 +12,7 @@ public:
 
     node* root = NULL;
 
-    node* update(node* cur, int tl, int tr, int pos, const T& val) {
+    node* update(node* cur, long long tl, long long tr, long long pos, const T& val) {
         if (!cur) {
             cur = new node;
         }
@@ -20,7 +20,7 @@ public:
             cur->val = val;
         }
         else {
-            int tm = tl + (tr - tl) / 2;
+            long long tm = tl + (tr - tl) / 2;
             if (pos <= tm) {
                 cur->left = update(cur->left, tl, tm, pos, val);
             }
@@ -32,26 +32,26 @@ public:
         return cur;
     }
 
-    T query(node* cur, int tl, int tr, int left, int right) {
+    T query(node* cur, long long tl, long long tr, long long left, long long right) {
         if (!cur || left > right) {
             return identity;
         }
         if (tl == left && tr == right) {
             return cur->val;
         }
-        int tm = tl + (tr - tl) / 2;
+        long long tm = tl + (tr - tl) / 2;
         return combine(query(cur->left, tl, tm, left, min(tm, right)),
                        query(cur->right, tm+1, tr, max(tm+1, left), right));
     }
 
-    segtree(int64_t p, T i, function<T (T, T)> c) : n(p), combine(c), identity(i) {}
+    segtree(long long p, T i, function<T (T, T)> c) : n(p), combine(c), identity(i) {}
 
-    void update(int pos, T val) {
+    void update(long long pos, T val) {
         root = update(root, 0, n-1, pos, val);
         return;
     }
 
-    T query(int left, int right) {
+    T query(long long left, long long right) {
         return query(root, 0, n-1, left, right);
     }
 };
