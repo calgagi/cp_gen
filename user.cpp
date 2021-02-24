@@ -1,6 +1,3 @@
-#define ll long long
-#define ld long double
-
 void solve() {
 
     return;
@@ -14,11 +11,7 @@ int main() {
     /* FILE *IN = freopen(FILENAME_IN, "r", stdin); */
     /* FILE *OUT = freopen(FILENAME_OUT, "w", stdout); */
 
-    int t = 1;
-    /* cin >> t; */
-    while (t--) {
-        solve();
-    }
+    solve();
 
     return 0;
 }

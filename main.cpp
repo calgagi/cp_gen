@@ -93,7 +93,9 @@ void output(fstream& new_file, const string& filename, const vector<string>& tem
                 "#include <bits/stdc++.h>\n"
                 "using namespace std;\n"
                 "#define FILENAME_IN \"" << noAfterDot(filename) << ".in\"\n"
-                "#define FILENAME_OUT \"" << noAfterDot(filename) << ".out\"\n\n";
+                "#define FILENAME_OUT \"" << noAfterDot(filename) << ".out\"\n"
+                "#define ll long long\n"
+                "#define ld long double\n\n";
     
     string gen_path = pathToGen();
 
