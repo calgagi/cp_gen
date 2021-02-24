@@ -62,23 +62,19 @@ ll crt(const vector<ll>& n, vector<ll> a) {
     return normalize(x, N);
 }
 
-vector<int> eratosthenes(const int mx) {
-    vector<int> primes;
-    vector<int> max_prime(mx+1, 0);
+vector<int> primes, sieve;
+void eratosthenes(const int mx) {
+    primes.clear();
+    sieve.assign(mx+1, 0);
+    sieve[1] = 1;
     for (int i = 2; i <= mx; i++) {
-        if (!max_prime[i]) {
+        if (!sieve[i]) {
+            sieve[i] = i;
             primes.push_back(i);
-            max_prime[i] = i;
         }
-        for (int& p : primes) {
-            if (p * i > mx) {
-                break;
-            }
-            primes[p * i] = (primes.back() == i ? i : p);
-            if (i % p == 0) {
-                break;
-            }
+        for (int j = 0; j < (int) primes.size() && primes[j] <= sieve[i] && primes[j]*i <= mx; j++) {
+            sieve[primes[j]*i] = primes[j];
         }
     }
-    return max_prime;
+    return; 
 }
