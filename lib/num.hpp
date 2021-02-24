@@ -62,19 +62,23 @@ long long crt(const vector<long long>& n, vector<long long> a) {
     return normalize(x, N);
 }
 
-vector<bool> eratosthenes(const int n, vector<int>& primes) {
-    primes = {1};
-    vector<bool> is_composite(n+1);
-    for (int i = 2; i <= n; i++) {
-        if (!is_composite[i]) {
+vector<int> eratosthenes(const int mx) {
+    vector<int> primes;
+    vector<int> max_prime(mx+1, 0);
+    for (int i = 2; i <= mx; i++) {
+        if (!max_prime[i]) {
             primes.push_back(i);
+            max_prime[i] = i;
         }
-        for (int j = 0; j < (int) primes.size() && primes[j] * i <= n; j++) {
-            is_composite[primes[j] * i] = true;
-            if (i % primes[j] == 0) {
+        for (int& p : primes) {
+            if (p * i > mx) {
+                break;
+            }
+            primes[p * i] = (primes.back() == i ? i : p);
+            if (i % p == 0) {
                 break;
             }
         }
     }
-    return is_composite;
+    return max_prime;
 }
