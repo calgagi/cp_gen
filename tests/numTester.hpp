@@ -24,14 +24,14 @@ public:
     }
 
     static bool testgcd() {
-        cpassert(gcd(1, 1) == 1);    
-        cpassert(gcd(10, 2) == 2);
-        cpassert(gcd(7, 31) == 1);
-        cpassert(gcd(36, 24) == 12);
-        cpassert(gcd(-7, -7) == 7);
-        cpassert(gcd(-6, 3) == 3);
-        cpassert(gcd(3, -6) == 3);
-        cpassert(gcd(-3, 6) == 3);
+        cpassert(lgcd(1, 1) == 1);
+        cpassert(lgcd(10, 2) == 2);
+        cpassert(lgcd(7, 31) == 1);
+        cpassert(lgcd(36, 24) == 12);
+        cpassert(lgcd(-7, -7) == 7);
+        cpassert(lgcd(-6, 3) == 3);
+        cpassert(lgcd(3, -6) == 3);
+        cpassert(lgcd(-3, 6) == 3);
         return true;
     }
 

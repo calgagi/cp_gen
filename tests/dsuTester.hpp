@@ -12,7 +12,7 @@ public:
                 return false;
             }
         }
-        cpassert(item.components() == 1000);
+        cpassert(item.num_components == 1000);
         return true;
     }
 
@@ -20,7 +20,7 @@ public:
         dsu item(100000);
         for (int i = 1; i < 100000; i++) {
             item.unite(0, i);
-            cpassert(item.components() == 100000-i);
+            cpassert(item.num_components == 100000-i);
         }
         return true;
     }
@@ -34,7 +34,7 @@ public:
                 c--;
                 item.unite(a, b);
             }
-            cpassert(c == item.components() && item.find(a) == item.find(b));
+            cpassert(c == item.num_components && item.find(a) == item.find(b));
         }
         return true;
     }
