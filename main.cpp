@@ -81,16 +81,7 @@ void output_templates(fstream& new_file, const vector<string>& templates) {
     return;
 }
 
-void output(fstream& new_file, const string& filename, const vector<string>& templates, const string& usaco_username = "") {
-    // USACO Header if specified
-    if (usaco_username != "") {
-        new_file << "/*\n"
-                    "ID: " << usaco_username << "\n"
-                    "LANG: C++\n"
-                    "TASK: " << noAfterDot(filename) << "\n"
-                    "*/\n";
-    }
-
+void output(fstream& new_file, const string& filename, const vector<string>& templates) {
     // Static Header
     time_t now = time(0);
     new_file << "/*\n"
@@ -102,10 +93,9 @@ void output(fstream& new_file, const string& filename, const vector<string>& tem
                 "#include <bits/stdc++.h>\n"
                 "using namespace std;\n"
                 "typedef long long ll;\n"
-                "typedef long double ld;\n"
-                "ifstream fin(\"" << noAfterDot(filename) << ".in\");\n"
-                "ofstream fout(\"" << noAfterDot(filename) << ".out\");\n\n";
-    
+                "typedef long double ld;\n\n";
+
+                    
     string gen_path = pathToGen();
 
     // Output templates
@@ -134,19 +124,10 @@ int main(int argc, char** argv) {
 
     // Parse CLI arguments
     vector<string> cliArgs;
-    string filename = "", usaco_username = "";
+    string filename = "";
     for (int i = 1; i < argc; i++) {
         cliArgs.push_back(argv[i]);
-        if (cliArgs.back() == "-u") {
-            // found USACO flag
-            if (i+1 >= argc) {
-                error("Expected USACO username after -u flag");
-            }
-            usaco_username = string(argv[i+1]);
-            i++;
-            cliArgs.pop_back();
-        }
-        else if (cliArgs.back()[0] != '-') {
+        if (cliArgs.back()[0] != '-') {
             // we've found our filename
             filename = cliArgs.back();
             cliArgs.pop_back();
@@ -168,7 +149,7 @@ int main(int argc, char** argv) {
         error("Could not open file for output");
     }
 
-    output(new_file, filename, cliArgs, usaco_username);
+    output(new_file, filename, cliArgs);
 
     return 0;
 }
