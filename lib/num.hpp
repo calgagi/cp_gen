@@ -63,17 +63,16 @@ ll crt(const vector<ll>& n, vector<ll> a) {
 }
 
 vector<int> primes, sieve;
-void eratosthenes(const int mx) {
+void eratosthenes(const ll mx) {
     primes.clear();
-    sieve.assign(mx+1, 0);
-    sieve[1] = 1;
-    for (int i = 2; i <= mx; i++) {
-        if (!sieve[i]) {
+    sieve.assign(mx+1, 1);
+    for (ll i = 2; i <= mx; i++) {
+        if (sieve[i] == 1) {
             sieve[i] = i;
             primes.push_back(i);
         }
-        for (int j = 0; j < (int) primes.size() && primes[j] <= sieve[i] && primes[j]*i <= mx; j++) {
-            sieve[primes[j]*i] = primes[j];
+        for (int j = 0; j < (int) primes.size() && primes[j] <= sieve[i] && i*primes[j] <= mx; j++) {
+            sieve[i*primes[j]] = primes[j];
         }
     }
     return; 
