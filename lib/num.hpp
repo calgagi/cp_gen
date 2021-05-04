@@ -1,11 +1,7 @@
-const ll MOD = 1e9 + 7;
+ll MOD = 1e9 + 7;
 
-ll normalize(const ll a, const ll b = MOD) {
-    ll ans = a % b;
-    if (ans < 0) {
-        ans += b;
-    }
-    return ans;
+ll normalize(ll a, ll b = MOD) {
+    return ((a % b) + b) % b;
 }
 
 ll lgcd(ll a, ll b) {
@@ -26,10 +22,6 @@ array<ll,2> egcd(ll a, ll b) {
         tie(a1, b1) = make_tuple(b1, a1 - q * b1);
     }
     return ans;
-}
-
-ll llcm(const ll& a, const ll& b) {
-    return a / lgcd(a, b) * b;
 }
 
 ll modpow(ll base, ll exp, ll mod = MOD) {
@@ -62,10 +54,9 @@ ll crt(const vector<ll>& n, vector<ll> a) {
     return normalize(x, N);
 }
 
-vector<int> primes, sieve;
-void eratosthenes(const ll mx) {
-    primes.clear();
-    sieve.assign(mx+1, 1);
+// primes populated with primes in range [2, mx] and sieve[i] = largest prime factor of i
+pair<vector<int>, vector<int>> eratosthenes(const ll mx) {
+    vector<int> primes, sieve(mx+1, 1);
     for (ll i = 2; i <= mx; i++) {
         if (sieve[i] == 1) {
             sieve[i] = i;
@@ -75,5 +66,5 @@ void eratosthenes(const ll mx) {
             sieve[i*primes[j]] = primes[j];
         }
     }
-    return; 
+    return {sieve, primes}; 
 }

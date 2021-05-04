@@ -1,24 +1,12 @@
-mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
-
-void preprocess() {
-
-}
-
-void solve() {
-
-}
-
 int main() {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
+    mt19937 rng(chrono::steady_clock::now().time_since_epoch().count());
 
-    preprocess();
+    int num_cases = 1;
+    cin >> num_cases;
+    for (int case_num = 1; case_num <= num_cases; case_num++) {
 
-    int tests = 1;
-    cin >> tests;
-    for (int tc = 1; tc <= tests; tc++) {
-        cout << "Case #" << tc << ": ";
-        solve();
     }
 
     return 0;
