@@ -29,9 +29,7 @@ ll modpow(ll base, ll exp, ll mod = MOD) {
     ll ans = 1;
     base %= mod;
     while (exp) {
-        if ((exp & 1LL)) {
-            ans = (ans * base) % mod;
-        }
+        if ((exp & 1LL)) ans = (ans * base) % mod;
         exp >>= 1;
         base = (base * base) % mod;
     }
@@ -62,9 +60,7 @@ pair<vector<int>, vector<int>> eratosthenes(const ll mx) {
             sieve[i] = i;
             primes.push_back(i);
         }
-        for (int j = 0; j < (int) primes.size() && primes[j] <= sieve[i] && i*primes[j] <= mx; j++) {
-            sieve[i*primes[j]] = primes[j];
-        }
+        for (int j = 0; j < (int) primes.size() && primes[j] <= sieve[i] && i*primes[j] <= mx; j++) sieve[i*primes[j]] = primes[j];
     }
     return {sieve, primes}; 
 }

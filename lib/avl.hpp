@@ -20,7 +20,6 @@ public:
 
     void refresh(node* cur) {
         cur->height = get_height(cur), cur->treeRef = cur->ref + (cur->left ? cur->left->treeRef : 0) + (cur->right ? cur->right->treeRef : 0);
-        return;
     }
 
     node* right_rotate(node* cur) {
@@ -43,12 +42,8 @@ public:
         else if (val < cur->val) cur->left = insert(cur->left, val);
         else cur->right = insert(cur->right, val);
         refresh(cur);
-        if (get_balance(cur) >= 2 && val < cur->left->val) {
-            cur = right_rotate(cur);
-        }
-        else if (get_balance(cur) <= -2 && val > cur->right->val) {
-            cur = left_rotate(cur);
-        }
+        if (get_balance(cur) >= 2 && val < cur->left->val) cur = right_rotate(cur);
+        else if (get_balance(cur) <= -2 && val > cur->right->val) cur = left_rotate(cur);
         else if (get_balance(cur) >= 2 && val > cur->left->val) {
             cur->left = left_rotate(cur->left);
             cur = right_rotate(cur);
@@ -60,10 +55,9 @@ public:
         return cur;
     }
 
+
     node* remove(node* cur, T val) {
-        if (!cur) {
-            return NULL;
-        }
+        if (!cur) return NULL;
         if (val == cur->val) {
             cur->ref--;
             if (cur->ref == 0) {
@@ -87,19 +81,11 @@ public:
                 }
             }
         }
-        else if (val < cur->val) {
-            cur->left = remove(cur->left, val);
-        }
-        else {
-            cur->right = remove(cur->right, val);
-        }
+        else if (val < cur->val) cur->left = remove(cur->left, val);
+        else cur->right = remove(cur->right, val);
         refresh(cur);
-        if (get_balance(cur) >= 2 && get_balance(cur->left) >= 0) {
-            cur = right_rotate(cur);
-        }
-        else if (get_balance(cur) <= -2 && get_balance(cur->right) <= 0) {
-            cur = left_rotate(cur);
-        }
+        if (get_balance(cur) >= 2 && get_balance(cur->left) >= 0) cur = right_rotate(cur);
+        else if (get_balance(cur) <= -2 && get_balance(cur->right) <= 0) cur = left_rotate(cur);
         else if (get_balance(cur) >= 2 && get_balance(cur->left) < 0) {
             cur->left = left_rotate(cur->left);
             cur = right_rotate(cur);
@@ -112,15 +98,9 @@ public:
     }
 
     int size_before(node* cur, T val) {
-        if (!cur) {
-            return 0;
-        }
-        if (val == cur->val) {
-            return (cur->left ? cur->left->treeRef : 0);
-        }
-        else if (cur->val < val) {
-            return cur->ref + (cur->left ? cur->left->treeRef : 0) + size_before(cur->right, val);
-        }
+        if (!cur) return 0;
+        if (val == cur->val) return (cur->left ? cur->left->treeRef : 0);
+        else if (cur->val < val) return cur->ref + (cur->left ? cur->left->treeRef : 0) + size_before(cur->right, val);
         return size_before(cur->left, val);
     }
 
@@ -129,16 +109,10 @@ public:
     }
 
     T at(node* cur, int index) {
-        if (!cur) {
-            return T();
-        }
+        if (!cur) return T();
         int before = (cur->left ? cur->left->treeRef : 0);
-        if (index <= before) {
-            return at(cur->left, index);
-        }
-        else if (index <= before + cur->ref) {
-            return cur->val;
-        }
+        if (index <= before) return at(cur->left, index);
+        else if (index <= before + cur->ref) return cur->val;
         return at(cur->right, index - (before + cur->ref));
     }
 
@@ -152,12 +126,10 @@ public:
 
     void insert(T val) {
         root = insert(root, val);
-        return;
     }     
 
     void remove(T val) {
         root = remove(root, val);    
-        return;
     }
 
     int size_before(T val) {
@@ -165,9 +137,6 @@ public:
     }
 
     T at(int index) {
-        if (index >= size() || index < 0) {
-            throw out_of_range("cp::avl.at(): bad index");
-        }
         return at(root, index+1);
     }
 
