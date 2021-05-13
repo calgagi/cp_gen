@@ -36,11 +36,36 @@ public:
         return true;
     }
 
+    static bool graphtraversal() {
+        int n = 100000;
+        vector<bool> visited(n);
+        vector<vector<int>> graph(n);
+        for (int i = 0; i < n; i++) {
+            graph[i].push_back((i + 1) % n);
+            graph[i].push_back((i + 15132) % n);
+            graph[i].push_back((i + 1001) % n);
+        }
+        rlamb([&](auto&& dfs, int cur) {
+            if (visited[cur]) {
+                return;
+            }
+            visited[cur] = true;
+            for (int& v : graph[cur]) {
+                dfs(v);
+            }
+        })(0);
+        for (int i = 0; i < n; i++) {
+            cpassert(visited[i] == true);
+        }
+        return true;
+    }
+                
     static bool runTests() {
         cout << "============ rlamb ============" << endl;
         map<string, function<bool()>> tests = {
             {"factorial", factorial},
-            {"fibonacci", fibonacci}
+            {"fibonacci", fibonacci},
+            {"graphtraversal", graphtraversal}
         };
         bool ans = true;
         for (const auto& test : tests) {
