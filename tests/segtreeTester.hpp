@@ -1,3 +1,4 @@
+#include "../lib/segtree.hpp"
 class segtreeTester {
 private:
     static bool instantiate() {

@@ -1,3 +1,4 @@
+#pragma once
 class dsu {
 public:
     vector<int> link;

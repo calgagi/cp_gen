@@ -74,7 +74,10 @@ void output_file(fstream& new_file, const string& file_path) {
     }
     string line;
     while (getline(to_output, line)) {
-        new_file << line << endl;
+        // Skip "#pragma once" lines, they are used for dependencies in testing
+        if (line != "#pragma once") {
+            new_file << line << endl;
+        }
     }
     return;
 }

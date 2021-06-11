@@ -1,3 +1,4 @@
+#include "../lib/dsu.hpp"
 class dsuTester {
   public:
     static bool instantiate() {

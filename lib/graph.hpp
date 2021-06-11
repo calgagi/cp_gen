@@ -1,3 +1,4 @@
+#pragma once
 class graph {
 public:
     vector<vector<pair<int, ll>>> adj;

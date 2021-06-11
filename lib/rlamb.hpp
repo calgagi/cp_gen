@@ -1,3 +1,4 @@
+#pragma once
 template <class F>
 struct _rlamb {
     F f;

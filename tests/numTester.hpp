@@ -1,3 +1,4 @@
+#include "../lib/num.hpp"
 class numTester {
 public:
     static bool testcrt() {

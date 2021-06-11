@@ -1,3 +1,4 @@
+#pragma once
 ll MOD = 1e9 + 7;
 
 ll normalize(ll a, ll b = MOD) {

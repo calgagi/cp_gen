@@ -1,3 +1,4 @@
+#include "../lib/rlamb.hpp"
 class rlambTester {
 public:
     static bool factorial() {

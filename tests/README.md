@@ -7,3 +7,4 @@ Rules:
 * All test functions must return a boolean.
 * All functions in `${DS}Tester.hpp` must be static
 * You may use the `cpassert(__EXPRESSION)` macro to return `false` if `__EXPRESSION` evaluates to `false`. Else, continues.
+* Include `lib/${DS}.hpp` file and all of its dependencies. The ${DS} file should have `#pragma once` at the top of it to avoid being included multiple times despite being needed by multiple libraries

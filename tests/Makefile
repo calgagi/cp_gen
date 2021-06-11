@@ -36,9 +36,6 @@ ${HEADER_FILE}:
 	printf "#define FAIL \"\\\033[1;31mfailed\\\033[0m\"\n" >> ${HEADER_FILE}; \
 	printf "#define PASS \"\\\033[1;32mpassed\\\033[0m\"\n" >> ${HEADER_FILE}; \
 	printf "#define cpassert(X) if (!(X)) return false; \n" >> ${HEADER_FILE}; \
-	for i in `find ../lib/ -type f -iwholename "*lib/*.hpp"`; do \
-		printf "#include \"../lib/$${i:7:-4}.hpp\"\n" >> ${HEADER_FILE}; \
-	done; \
 	for i in `find . -type f -iwholename "*.hpp"`; do \
 		printf "#include \"./$${i:2:-4}.hpp\"\n" >> ${HEADER_FILE}; \
 	done; \
