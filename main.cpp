@@ -10,12 +10,23 @@
 #include <unistd.h>
 #include <vector>
 #include <string>
+#include <map>
+#include <set>
+#include <queue>
 
 using namespace std;
 
-const string CP_GEN_AFTER = "./user.cpp";
+// file to be printed to target file after libraries are printed
+string CP_GEN_AFTER = "./user.cpp";
 
-// Helper functions
+// Dependency graph for libraries that require other libraries
+// Note: this should be a DAG
+// Syntax: {lib, {list of libs that lib is dependent on}}
+map<string, vector<string>> dep_graph = {
+    {"lca", {"graph"}}
+};
+
+// ============= Helper functions ==============
 void error(string msg) {
     cout << "cp_gen: " << msg << endl;
     exit(1);
@@ -54,7 +65,7 @@ string pathToGen() {
     return gen_path;
 }
 
-// Output functions
+// ============= Output functions ==============
 void output_file(fstream& new_file, const string& file_path) {
     fstream to_output;
     to_output.open(file_path);
@@ -73,9 +84,33 @@ void output_templates(fstream& new_file, const vector<string>& templates) {
     string gen_path = pathToGen();
     gen_path += "lib/";
 
+    set<string> already_outputted;
+
     for (const string& ds : templates) {
-        output_file(new_file, gen_path + ds + ".hpp");
-        new_file << endl;
+        vector<string> to_output;
+
+        queue<string> q;
+        q.push(ds);
+
+        // perform BFS on dependency graph
+        while (!q.empty()) {
+            string cur_lib = q.front();
+            q.pop();
+            if (already_outputted.find(cur_lib) != already_outputted.end()) {
+                continue;
+            }
+            already_outputted.insert(cur_lib);
+            to_output.push_back(cur_lib);
+            for (const string& dep : dep_graph[cur_lib]) {
+                q.push(dep);
+            }
+        }
+        
+        // output files in reverse visited order
+        for (int i = to_output.size() - 1; ~i; i--) {
+            output_file(new_file, gen_path + to_output[i] + ".hpp");
+            new_file << endl;
+        }
     }
 
     return;
@@ -109,6 +144,7 @@ void output(fstream& new_file, const string& filename, const vector<string>& tem
     return;
 }
 
+// =============== main ================
 int main(int argc, char** argv) {
     ios_base::sync_with_stdio(false);  
     cin.tie(NULL);
