@@ -23,7 +23,7 @@ string CP_GEN_AFTER = "./user.cpp";
 // Note: this should be a DAG
 // Syntax: {lib, {list of libs that lib is dependent on}}
 map<string, vector<string>> dep_graph = {
-    {"lca", {"graph"}}
+    {"lca", {"graph", "rlamb"}}
 };
 
 // ============= Helper functions ==============
