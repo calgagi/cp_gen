@@ -9,9 +9,9 @@ A modular and robust application to create competitive programming templates.
 
 ## Usage
 * Simply enter `gen $FILENAME` to generate a C++ file. `$FILENAME` is required.
-* Everything above the `cp` namespace is unchangeable unless you modify `main.cpp` (feel free to).
-* Everything after the `cp` namespace is outputted from `user.cpp` in this repo. You can freely modify this file to your liking. <b>Make sure it includes a main function!</b>
-* Everything after the headers and before `user.cpp` is outputted from `./lib/$DS.hpp` where you can specify which `$DS`s you want to be included.
+* The header for generated files is unchangeable unless you modify `main.cpp` (feel free to).
+* Everything after the `BEGIN USER CODE` line in the generated file is outputted from `user.cpp` in this repo. You can freely modify this file to your liking. <b>Make sure it includes a main function!</b>
+* Everything after the headers and before `BEGIN USER CODE` is outputted from `./lib/$DS.hpp` where you can specify which `$DS`s you want to be included.
 
 ## Examples
 * `gen X.cpp -dsu` will include the Disjoint Set Union data structure and generate a file called `X.cpp` in the current working directory.
