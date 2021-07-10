@@ -5,7 +5,9 @@ ll normalize(ll a, ll b = MOD) {
     return ((a % b) + b) % b;
 }
 
+// returns a if b == 0, b if a == 0
 ll lgcd(ll a, ll b) {
+    if (!a) return b;
     while (b) {
         a %= b;
         swap(a, b);

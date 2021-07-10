@@ -3,14 +3,15 @@
 #include "../lib/lca.hpp"
 class lcaTester {
 private:
+    /* Graph used in most of these tests:
+     *  -- 0 --
+     * /   |   \
+     * 1   2    3
+     * | \  \
+     * 4  5  6
+     */
+
     static bool undirectedbuild() {
-        /*    
-         *  -- 0 --
-         * /   |   \
-         * 1   2    3
-         * | \  \
-         * 4  5  6
-         */
         vector<vector<int>> adj = {
             { 1, 2, 3 },
             { 0, 4, 5 },
@@ -46,13 +47,6 @@ private:
     }
 
     static bool directedbuild() {
-        /*    
-         *  -- 0 --
-         * /   |   \
-         * 1   2    3
-         * | \  \
-         * 4  5  6
-         */
         vector<vector<int>> adj = {
             { 1, 2, 3 },
             { 4, 5 },
