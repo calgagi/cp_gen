@@ -19,7 +19,7 @@ public:
         else {
             ll tm = tl + (tr - tl) / 2;
             if (pos <= tm) cur->left = update(cur->left, tl, tm, pos, val);
-            else cur->right = update(cur->right, tm+1, tr, pos, val);
+            else cur->right = update(cur->right, tm + 1, tr, pos, val);
             cur->val = combine((cur->right ? cur->right->val : identity), (cur->left ? cur->left->val : identity));
         }
         return cur;
@@ -29,16 +29,16 @@ public:
         if (!cur || left > right) return identity;
         if (tl == left && tr == right) return cur->val;
         ll tm = tl + (tr - tl) / 2;
-        return combine(query(cur->left, tl, tm, left, min(tm, right)), query(cur->right, tm+1, tr, max(tm+1, left), right));
+        return combine(query(cur->left, tl, tm, left, min(tm, right)), query(cur->right, tm + 1, tr, max(tm + 1, left), right));
     }
 
     segtree(ll p, T i, function<T (T, T)> c) : n(p), combine(c), identity(i) {}
 
     void update(ll pos, T val) {
-        root = update(root, 0, n-1, pos, val);
+        root = update(root, 0, n - 1, pos, val);
     }
 
     T query(ll left, ll right) {
-        return query(root, 0, n-1, left, right);
+        return query(root, 0, n - 1, left, right);
     }
 };
