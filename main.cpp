@@ -131,14 +131,15 @@ void output(fstream& new_file, const string& filename, const vector<string>& tem
         "#include <bits/stdc++.h>\n"
         "using namespace std;\n"
         "typedef long long ll;\n"
-        "typedef long double ld;\n\n";
+        "typedef long double ld;\n\n"
+        "namespace cp {\n\n";
 
 
     string gen_path = pathToGen();
 
     // Output templates
     output_templates(new_file, templates);
-    new_file << "\n";
+    new_file << "}\n\n";
 
     new_file << "/* ===== BEGIN USER CODE ===== */\n\n";
     // User-defined after cp namespace file
