@@ -42,9 +42,9 @@ public:
         return word;
     }
 
-    string get_until_ws() {
+    string get_until(char deliminator = ' ') {
         string res = "";
-        while (idx < len && input[idx] != ' ' && input[idx] != '\n' && input[idx] != '\n') res += input[idx++];
+        while (idx < len && input[idx] != deliminator && input[idx] != '\n') res += input[idx++];
         return res;
     }
 };

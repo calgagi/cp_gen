@@ -139,9 +139,8 @@ void output(fstream& new_file, const string& filename, const vector<string>& tem
 
     // Output templates
     output_templates(new_file, templates);
-    new_file << "}\n\n";
-
-    new_file << "/* ===== BEGIN USER CODE ===== */\n\n";
+    new_file << "}\n\n"
+                "/* ===== BEGIN USER CODE ===== */\n\n";
     // User-defined after cp namespace file
     output_file(new_file, gen_path + CP_GEN_AFTER);
 
